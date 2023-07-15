@@ -19,7 +19,7 @@ public class module_login extends Application{
     static Stage stage = new Stage();
     static TextField user = new TextField("sa");
     static TextField password = new TextField("123456");
-    static TextField DB = new TextField("Java");
+    static TextField DB = new TextField("Shop");
 
     @Override
     public void start(Stage stage) throws Exception {
