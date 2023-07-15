@@ -1,3 +1,4 @@
+//负责人：ljy
 package module_login;
 
 import javafx.application.Application;
@@ -111,24 +112,7 @@ public class module_login extends Application {
     }
 
     public static void loginExecute() {
-        try {
-            shared.userStr = user.getText();
-            shared.passwordStr = psw.getText();
-            String DBStr = "Shop";
-            String DBTemp = shared.dbURL + DBStr;
 
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            System.out.println("Load Success!");
-
-            shared.dbConn = DriverManager.getConnection(DBTemp, shared.userStr, shared.passwordStr);
-            shared.dbURL = DBTemp;
-            System.out.println("Connection Success!");
-            stage.close();
-        } catch (Exception ex) {
-            String title = "Connection Error";
-            String warning = "Check the user and password!";
-            JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
-        }
     }
 
     @Override
