@@ -1,2 +1,2 @@
 # Shop
-Aria Van加入成功
+Aria Van 加入成功
