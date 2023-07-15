@@ -7,7 +7,9 @@ module com.example.demo {
     exports module_shared;
     exports module_login;
     exports module_main;
+    exports module_signup;
 
-    opens module_login  to javafx.fxml;
-    opens module_main   to javafx.fxml;
+    opens module_login      to javafx.fxml;
+    opens module_main       to javafx.fxml;
+    opens module_signup     to javafx.fxml;
 }
