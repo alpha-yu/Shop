@@ -1,5 +1,7 @@
 package Manager;
 
+// 经理
+// 王昕阳
 import module_shared.User;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
