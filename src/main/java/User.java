@@ -2,11 +2,8 @@ public abstract class User {
     private String _userName;
     private String _password;
     private int auth;
-
     private String UCIF;
-
     private String Uaddr;
-
     public String get_userName() {
         return _userName;
     }
@@ -46,7 +43,6 @@ public abstract class User {
     public void setUaddr(String uaddr) {
         Uaddr = uaddr;
     }
-
 
     public abstract void ShowMenu();
 }
