@@ -8,6 +8,7 @@ public abstract class User {
     private int auth;
     private String UCIF;
     private String Uaddr;
+
     public String get_userName() {
         return _userName;
     }
@@ -50,4 +51,3 @@ public abstract class User {
 
     public abstract void ShowMenu();
 }
-
