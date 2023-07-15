@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 
 // 用户基类，其他用户类型继承此基类
 // 王昕阳
-public abstract class User {
 public abstract class User extends Application{
     private String _userName;
     private String _password;
