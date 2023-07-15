@@ -3,6 +3,10 @@ public class User {
     private String _password;
     private int auth;
 
+    private String UCIF;
+
+    private String Uaddr;
+
     public String get_userName() {
         return _userName;
     }
@@ -25,6 +29,22 @@ public class User {
 
     public void setAuth(int auth) {
         this.auth = auth;
+    }
+
+    public String getUCIF() {
+        return UCIF;
+    }
+
+    public void setUCIF(String UCIF) {
+        this.UCIF = UCIF;
+    }
+
+    public String getUaddr() {
+        return Uaddr;
+    }
+
+    public void setUaddr(String uaddr) {
+        Uaddr = uaddr;
     }
 
     public void ShowMenu()
