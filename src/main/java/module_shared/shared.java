@@ -17,6 +17,7 @@ public class shared {
             if (!newValue && tf.getText().isEmpty()) {
                 tf.setText(tip);
                 tf.setStyle("-fx-text-fill:#a9a9a9;");
+                System.out.println(tip);
             } else if (tf.getText().equals(tip)) {
                 tf.setText("");
                 tf.setStyle("-fx-text-fill:black;");

@@ -26,7 +26,7 @@ public class module_signup extends Application {
     static ComboBox<String> role = new ComboBox<>();
     static String userTip = "Please enter the user name";
     static String pswTip = "Please enter the password";
-    static String pswcheckTip = "Please enter the same passward again";
+    static String pswcheckTip = "Please enter the same password again";
 
     public static void showSignup() {
         stage.setTitle("Sign Up");
