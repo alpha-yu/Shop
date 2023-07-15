@@ -38,9 +38,15 @@ public class Manager extends User
         pane.setHgap(50);
         pane.setVgap(50);
 
+        Font btFont = new Font("黑体", 20);
+
         Button bt1 = new Button("商品浏览");
         bt1.setPrefWidth(200);
-        bt1.setPrefHeight(50);
+        bt1.setPrefHeight(40);
+        bt1.setFont(btFont);
+        bt1.setStyle("-fx-background-color: rgb(100,197,255);");
+        button_change(bt1);
+
         bt1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event)
@@ -55,7 +61,10 @@ public class Manager extends User
 
         Button bt2 = new Button("采购表审批");
         bt2.setPrefWidth(200);
-        bt2.setPrefHeight(50);
+        bt2.setPrefHeight(40);
+        bt2.setFont(btFont);
+        bt2.setStyle("-fx-background-color: rgb(100,197,255);");
+        button_change(bt2);
         bt2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event)
@@ -70,7 +79,11 @@ public class Manager extends User
 
         Button bt3 = new Button("订单信息查询");
         bt3.setPrefWidth(200);
-        bt3.setPrefHeight(50);
+        bt3.setPrefHeight(40);
+        bt3.setFont(btFont);
+        bt3.setStyle("-fx-background-color: rgb(100,197,255);");
+        button_change(bt3);
+
         bt3.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event)
@@ -85,7 +98,10 @@ public class Manager extends User
 
         Button bt4 = new Button("折扣设置");
         bt4.setPrefWidth(200);
-        bt4.setPrefHeight(50);
+        bt4.setPrefHeight(40);
+        bt4.setFont(btFont);
+        bt4.setStyle("-fx-background-color: rgb(100,197,255);");
+        button_change(bt4);
         bt4.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event)
@@ -109,6 +125,15 @@ public class Manager extends User
         Scene scene =new Scene(pane,800,600);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static void button_change(Button bt) {
+        bt.setOnMouseEntered(e -> {
+            bt.setStyle("-fx-background-color: rgb(150,210,255);");
+        });
+        bt.setOnMouseExited(e -> {
+            bt.setStyle("-fx-background-color: rgb(100,197,255);");
+        });
     }
 
     @Override
