@@ -1,4 +1,4 @@
-public class User {
+public abstract class User {
     private String _userName;
     private String _password;
     private int auth;
@@ -47,8 +47,6 @@ public class User {
         Uaddr = uaddr;
     }
 
-    public void ShowMenu()
-    {
-        
-    }
+
+    public abstract void ShowMenu();
 }
