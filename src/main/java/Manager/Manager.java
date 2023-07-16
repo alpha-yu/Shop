@@ -40,11 +40,12 @@ public class Manager extends User
 
         Font btFont = new Font("黑体", 20);
 
+
         Button bt1 = new Button("商品浏览");
         bt1.setPrefWidth(200);
         bt1.setPrefHeight(40);
         bt1.setFont(btFont);
-        bt1.setStyle("-fx-background-color: rgb(100,197,255);");
+        bt1.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
         button_change(bt1);
 
         bt1.setOnAction(new EventHandler<ActionEvent>() {
@@ -63,7 +64,7 @@ public class Manager extends User
         bt2.setPrefWidth(200);
         bt2.setPrefHeight(40);
         bt2.setFont(btFont);
-        bt2.setStyle("-fx-background-color: rgb(100,197,255);");
+        bt2.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
         button_change(bt2);
         bt2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -81,7 +82,7 @@ public class Manager extends User
         bt3.setPrefWidth(200);
         bt3.setPrefHeight(40);
         bt3.setFont(btFont);
-        bt3.setStyle("-fx-background-color: rgb(100,197,255);");
+        bt3.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
         button_change(bt3);
 
         bt3.setOnAction(new EventHandler<ActionEvent>() {
@@ -100,7 +101,7 @@ public class Manager extends User
         bt4.setPrefWidth(200);
         bt4.setPrefHeight(40);
         bt4.setFont(btFont);
-        bt4.setStyle("-fx-background-color: rgb(100,197,255);");
+        bt4.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
         button_change(bt4);
         bt4.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -108,6 +109,7 @@ public class Manager extends User
             {
                 // 按下按钮时触发的函数
                 //function();
+                System.out.println("test");
 
                 // 切换场景
                 //primaryStage.setScene(scene);
@@ -129,10 +131,10 @@ public class Manager extends User
 
     public static void button_change(Button bt) {
         bt.setOnMouseEntered(e -> {
-            bt.setStyle("-fx-background-color: rgb(150,210,255);");
+            bt.setStyle("-fx-background-color: #0056b3; -fx-text-fill: white;");
         });
         bt.setOnMouseExited(e -> {
-            bt.setStyle("-fx-background-color: rgb(100,197,255);");
+            bt.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
         });
     }
 
