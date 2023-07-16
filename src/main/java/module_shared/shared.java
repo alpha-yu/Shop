@@ -17,6 +17,13 @@ public class shared {
     public static String white_text = "-fx-text-fill:white;";
     public static String grey_text = "-fx-text-fill:#a9a9a9;";
 
+    //权限
+    public static final int AUTH_CUSTOMER =0;
+    public static final int AUTH_SELLER =1;
+    public static final int AUTH_PURCHASER =2;
+    public static final int AUTH_MANAGER =3;
+    public static final int AUTH_ADMINISTRATOR =4;
+
     //按钮鼠标悬停提示
     public static void button_change(Button bt) {
         bt.setOnMouseEntered(e -> {
