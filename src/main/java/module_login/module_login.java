@@ -17,12 +17,17 @@ import module_shared.shared;
 import module_signup.*;
 
 public class module_login extends Application {
-    static Stage stage = new Stage();
-    static TextField user = new TextField();
-    static TextField psw = new TextField();
-    static ComboBox<String> role = new ComboBox<>();
+    static Stage stage;
+    static TextField user;
+    static TextField psw;
+    static ComboBox<String> role;
 
     public static void showLogin() {
+        Stage stage = new Stage();
+        TextField user = new TextField();
+        TextField psw = new TextField();
+        ComboBox<String> role = new ComboBox<>();
+
         stage.setTitle("Log In");
         Font font = new Font("Times New Roman", 18);
         Button btLogin = new Button("Log In");

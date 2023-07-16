@@ -19,16 +19,22 @@ import module_shared.shared;
 import javax.swing.*;
 
 public class module_signup extends Application {
-    static Stage stage = new Stage();
-    static TextField user = new TextField();
-    static TextField psw = new TextField();
-    static TextField pswcheck = new TextField();
-    static ComboBox<String> role = new ComboBox<>();
+    static Stage stage;
+    static TextField user;
+    static TextField psw;
+    static TextField pswcheck;
+    static ComboBox<String> role;
     static String userTip = "Please enter the user name";
     static String pswTip = "Please enter the password";
-    static String pswcheckTip = "Please enter the same passward again";
+    static String pswcheckTip = "Please enter the same password again";
 
     public static void showSignup() {
+        Stage stage = new Stage();
+        TextField user = new TextField();
+        TextField psw = new TextField();
+        TextField pswcheck = new TextField();
+        ComboBox<String> role = new ComboBox<>();
+
         stage.setTitle("Sign Up");
         Font font = new Font("Times New Roman", 18);
         Button btSignup = new Button("Sign Up");
