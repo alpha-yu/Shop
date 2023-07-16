@@ -19,7 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
- public class module_login extends Application {
+public class module_login extends Application {
     static Stage stage;
     static TextField user;
     static PasswordField psw;
@@ -162,7 +162,7 @@ import java.sql.SQLException;
             //登录失败
             else{
                 String title = "登录失败";
-                String warning = "用户名或密码错误！";
+                String warning = "请检查用户名和密码，并选择对应身份类型！";
                 JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
             }
         } catch (SQLException e) {
