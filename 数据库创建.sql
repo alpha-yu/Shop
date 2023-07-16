@@ -114,4 +114,13 @@ create view V_Sell as
     where S.Pno=P.Pno and P.Gno=G.Gno
     group by G.Gno,G.Gname,G.Gprice
 go
-select * from V_Sell
+create view V_Order as
+    select OBno,Obuyer,count(*) as Osum,sum(Oprice) as SumPrice,Otime,Oinfo
+    from Orders O
+    group by OBno,Obuyer,Oprice,Otime,Oinfo
+go
+create view V_Purchase as
+    select PBno,count(*) as Psum,sum(Pprice) as SumPrice,Ptime,Pperson
+    from Purchase
+    group by PBno,Pprice,Ptime,Pperson
+go
