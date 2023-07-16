@@ -18,6 +18,11 @@ public class shared {
     public static String grey_text = "-fx-text-fill:#a9a9a9;";
 
     //权限
+    public static final String TEXT_CUSTOMER="顾客";
+    public static final String TEXT_SELLER ="售货员";
+    public static final String TEXT_PURCHASER ="采购员";
+    public static final String TEXT_MANAGER ="经理";
+    public static final String TEXT_ADMINISTRATOR ="系统管理员";
     public static final int AUTH_CUSTOMER =0;
     public static final int AUTH_SELLER =1;
     public static final int AUTH_PURCHASER =2;
