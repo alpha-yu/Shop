@@ -10,3 +10,6 @@ demo.iml
 .idea/misc.xml
 .idea/libraries/mssql_jdbc_9_2_1_jre8.xml
 .idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_2.xml
+target/classes/Manager/Manager.class
+target/classes/Manager/Manager.class
+target/classes/module-info.class
