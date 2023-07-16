@@ -4,6 +4,9 @@ package Manager;
 // 王昕阳
 import javafx.geometry.Insets;
 import javafx.scene.layout.Pane;
+import module_order.OrderInterfaceOutline;
+import module_purchase.PurchaseSchedule;
+import module_purchase.PurchaseScheduleOutline;
 import module_shared.User;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -21,17 +24,19 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class Manager extends User
 {
-//    private Order order;
-//    private Browse browse;
-//    private Purchase Purchase;
-//    private Off off;
-
     @Override
     public void ShowMenu()
     {
+        Stage stage = new Stage();
+        stage.setTitle("ManagerMenu");
+
         GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
         pane.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
@@ -39,7 +44,6 @@ public class Manager extends User
         pane.setVgap(50);
 
         Font btFont = new Font("黑体", 20);
-
 
         Button bt1 = new Button("商品浏览");
         bt1.setPrefWidth(200);
@@ -71,10 +75,13 @@ public class Manager extends User
             public void handle(ActionEvent event)
             {
                 // 按下按钮时触发的函数
-                //function();
-
-                // 切换场景
-                //primaryStage.setScene(scene);
+                PurchaseScheduleOutline purchaseScheduleOutline = new PurchaseScheduleOutline();
+                try {
+                    purchaseScheduleOutline.start(new Stage());
+                    stage.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -89,11 +96,13 @@ public class Manager extends User
             @Override
             public void handle(ActionEvent event)
             {
-                // 按下按钮时触发的函数
-                //function();
-
-                // 切换场景
-                //primaryStage.setScene(scene);
+                OrderInterfaceOutline orderInterfaceOutline = new OrderInterfaceOutline();
+                try {
+                    orderInterfaceOutline.start(new Stage());
+                    stage.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -109,7 +118,6 @@ public class Manager extends User
             {
                 // 按下按钮时触发的函数
                 //function();
-                System.out.println("test");
 
                 // 切换场景
                 //primaryStage.setScene(scene);
@@ -120,9 +128,6 @@ public class Manager extends User
         pane.add(bt2 ,1, 0);
         pane.add(bt3 ,0, 1);
         pane.add(bt4 ,1, 1);
-
-        Stage stage = new Stage();
-        stage.setTitle("ManagerMenu");
 
         Scene scene =new Scene(pane,800,600);
         stage.setScene(scene);
