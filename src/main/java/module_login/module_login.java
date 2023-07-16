@@ -19,7 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class module_login extends Application {
+ public class module_login extends Application {
     static Stage stage;
     static TextField user;
     static PasswordField psw;
