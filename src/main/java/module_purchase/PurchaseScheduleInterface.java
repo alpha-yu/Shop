@@ -6,16 +6,23 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import module_login.module_login;
+import module_main.module_main;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Timestamp;
+
+import static module_shared.shared.dbConn;
+
 public class PurchaseScheduleInterface extends Application {
     private List<PurchaseSchedule> orders; // 模拟采购表数据
     private PurchaseSchedule order;
@@ -38,8 +45,10 @@ public class PurchaseScheduleInterface extends Application {
         searchField.setPrefWidth(600);
         searchField.setPromptText("请输入订采购单号");
         Button searchButton = new Button("搜索");
+        Button backButton = new Button("返回");
         //设置‘搜索’按钮颜色
         searchButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
+        backButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
         //当鼠标停留在按钮上时，颜色变深
         searchButton.setOnMouseEntered(event -> {
             searchButton.setStyle("-fx-background-color: #0056b3; -fx-text-fill: white;");
@@ -47,8 +56,23 @@ public class PurchaseScheduleInterface extends Application {
         searchButton.setOnMouseExited(event -> {
             searchButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
         });
+        backButton.setOnMouseEntered(event -> {
+            backButton.setStyle("-fx-background-color: #0056b3; -fx-text-fill: white;");
+        });
+        backButton.setOnMouseExited(event -> {
+            backButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
+        });
+        //返回按钮跳转到上一界面
+        backButton.setOnAction(e -> {
+            // 在这里实现跳转逻辑，可以打开新窗口或者加载新的界面
+            PurchaseScheduleOutline root = createOderView();
+            Stage newStage = new Stage();
+            root.start(newStage);
+            primaryStage.close();
+            updateDB();
+        });
         //使文本框于搜索按钮并排
-        HBox hBox = new HBox(10, searchField, searchButton);
+        HBox hBox = new HBox(10, searchField, searchButton, backButton);
         //创建列表
         TableView<PurchaseSchedule> tableView = new TableView<>();
         TableColumn<PurchaseSchedule, String> purchaseIdColumn = new TableColumn<>("采购单号");
@@ -102,7 +126,6 @@ public class PurchaseScheduleInterface extends Application {
                 final TableCell<PurchaseSchedule, Void> cell = new TableCell<PurchaseSchedule, Void>() {
                     private final Button rejectButton = new Button("驳回");
                     private final Button approveButton = new Button("批准");
-
                     {
                         rejectButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
                         rejectButton.setOnMouseEntered(event -> {
@@ -158,6 +181,7 @@ public class PurchaseScheduleInterface extends Application {
                                 approveButton.setDisable(false);
                             }
                         }
+                        updateDB();
                     }
                 };
                 return cell;
@@ -188,19 +212,8 @@ public class PurchaseScheduleInterface extends Application {
                 tableView.setItems(FXCollections.observableList(searchResult));
             }
         });
-        //双击元组跳转
-        tableView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) { // 双击事件
-                PurchaseSchedule selectedItem = tableView.getSelectionModel().getSelectedItem();
-                if (selectedItem != null) {
-                    // 在这里实现跳转逻辑，可以打开新窗口或者加载新的界面
-                    Stage newStage = new Stage();
-                    Scene scene = new Scene(new AnchorPane()); // 创建一个空白的AnchorPane作为界面
-                    newStage.setScene(scene);
-                    newStage.show();
-                }
-            }
-        });
+
+
         // 创建布局
         BorderPane borderPane = new BorderPane();
         VBox vBox = new VBox();
@@ -218,6 +231,53 @@ public class PurchaseScheduleInterface extends Application {
     // 初始化订单数据
     private void initData() {
         orders = new ArrayList<>();
-        orders.add(order);
+        module_main.SQL_connect();
+        try {
+            Statement st;
+            ResultSet rs;
+            String sql = "select * from Purchase "+
+                    "where PBno = '"+order.getPurchaseBatchId()+"';";
+            st = dbConn.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                try {
+                    String Pno = rs.getString(1);
+                    String PBno = rs.getString(2);
+                    String Gno = rs.getString(3);
+                    String Sno = rs.getString(4);
+                    int Psum = rs.getInt(6);
+                    double Pprice = rs.getDouble(7);
+                    Timestamp Ptime = rs.getTimestamp(5);
+                    String Pperson = rs.getString(8);
+                    int Pflag = rs.getInt(9);
+                    PurchaseSchedule order = new PurchaseSchedule(Pno, PBno, Gno, Sno, Psum, Pprice, Pperson, Ptime, Pflag);
+                    orders.add(order);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            dbConn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //更新审批表状态
+    private void updateDB(){
+        module_main.SQL_connect();
+        String sql = "UPDATE Purchase SET Pflag = ? WHERE Pno = ?";
+        try {
+            PreparedStatement statement = dbConn.prepareStatement(sql);
+            for (PurchaseSchedule order : orders) {
+                statement.setInt(1, order.getState());
+                statement.setString(2, order.getPurchaseId());
+                statement.executeUpdate();  // 执行插入操作
+            }
+            dbConn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private PurchaseScheduleOutline createOderView() {
+        return new PurchaseScheduleOutline();
     }
 }

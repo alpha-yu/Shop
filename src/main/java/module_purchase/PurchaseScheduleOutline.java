@@ -10,9 +10,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import module_login.module_login;
+import module_main.module_main;
+import module_shared.shared;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Timestamp;
+
+import static module_shared.shared.dbConn;
 
 public class PurchaseScheduleOutline extends Application {
     private List<PurchaseSchedule> orders; // 模拟订单数据
@@ -61,27 +69,6 @@ public class PurchaseScheduleOutline extends Application {
         amountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
         timeColumn.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
         buyerIdColumn.setCellValueFactory(cellData -> cellData.getValue().buyerIdProperty());
-//        stateColumn.setCellValueFactory(cellData -> cellData.getValue().stateProperty().asObject());
-        //回调函数自定义单元格内容
-//        stateColumn.setCellValueFactory(cellData -> {
-//            IntegerProperty stateProperty = cellData.getValue().stateProperty();
-//            return stateProperty.asObject();
-//        });
-//        stateColumn.setCellFactory(column -> new TableCell<>() {
-//            @Override
-//            protected void updateItem(Integer state, boolean empty) {
-//                super.updateItem(state, empty);
-//                if (empty || state == null) {
-//                    setText("");
-//                }  else if (state == 0) {
-//                    setText("未处理");
-//                } else if (state == 1) {
-//                    setText("已处理");
-//                } else {
-//                    setText("状态异常");
-//                }
-//            }
-//        });
 
         // 添加列到表格
         tableView.getColumns().addAll(purchaseBatchIdColumn, amountColumn, timeColumn, buyerIdColumn, buttonColumn);
@@ -112,7 +99,6 @@ public class PurchaseScheduleOutline extends Application {
             public TableCell<PurchaseSchedule, Void> call(final TableColumn<PurchaseSchedule, Void> param) {
                 final TableCell<PurchaseSchedule, Void> cell = new TableCell<>() {
                     private final Button button = new Button("查看");
-
                     {
                         button.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
                         button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: #0056b3; -fx-text-fill: white;"));
@@ -124,6 +110,7 @@ public class PurchaseScheduleOutline extends Application {
                                 PurchaseScheduleInterface root = createOderView(order);
                                 Stage newStage = new Stage();
                                 root.start(newStage);
+                                primaryStage.close();
                             }
                         });
                     }
@@ -159,9 +146,30 @@ public class PurchaseScheduleOutline extends Application {
     // 初始化订单数据
     private void initData() {
         orders = new ArrayList<>();
-        orders.add(new PurchaseSchedule("1001", "1", "#101", "HB1001", 1,100.0, "YG001", Timestamp.valueOf("2023-07-15 14:30:30"), 0));
-        orders.add(new PurchaseSchedule("1002", "2", "#102", "HB1001", 1,200.0, "YG002", Timestamp.valueOf("2023-07-15 15:30:30"), 0));
-        orders.add(new PurchaseSchedule("1003", "3", "#103", "HB1001", 1,300.0, "YG003", Timestamp.valueOf("2023-07-15 16:30:30"), 0));
+        module_main.SQL_connect();
+        try {
+            Statement st;
+            ResultSet rs;
+            String sql = "select * from V_Purchase";
+            st = shared.dbConn.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                try {
+                    String PBno = rs.getString(1);
+                    int Psum = rs.getInt(2);
+                    double SumPrice = rs.getDouble(3);
+                    Timestamp Ptime = rs.getTimestamp(4);
+                    String Pperson = rs.getString(5);
+                    PurchaseSchedule order = new PurchaseSchedule(PBno, Psum, SumPrice, Pperson, Ptime);
+                    orders.add(order);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            dbConn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     private PurchaseScheduleInterface createOderView(PurchaseSchedule selectedItem) {
         return new PurchaseScheduleInterface(selectedItem);

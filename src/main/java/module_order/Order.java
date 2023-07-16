@@ -24,6 +24,9 @@ public class Order {
         this.time = time;
         this.state = state;
     }
+    public Order(String orderBatchId, String customer, int num, double amount, Timestamp time, int state){
+        this("0", orderBatchId, customer, "0", num, amount, time,state);
+    }
     public String getOrderId() {
         return orderId;
     }
