@@ -2,3 +2,11 @@
 *.xml
 .idea/misc.xml
 .idea/misc.xml
+target/classes/Manager/Manager$2.class
+target/classes/Manager/Manager$3.class
+target/classes/Manager/Manager$1.class
+target/classes/Manager/Manager$4.class
+demo.iml
+.idea/misc.xml
+.idea/libraries/mssql_jdbc_9_2_1_jre8.xml
+.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_2.xml
