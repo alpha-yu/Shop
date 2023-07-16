@@ -179,6 +179,8 @@ public class module_signup extends Application {
             String title = "成功";
             String warning = "注册成功！";
             JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
+            stage.close();
+            module_login.showLogin();
         } catch (SQLException e) {
             String title = "失败";
             String warning = "用户名重复！";
