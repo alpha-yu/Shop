@@ -48,8 +48,8 @@ constraint FK_SG_G foreign key (Gno) references Good(Gno)
 create table Purchase(
 Pno     varchar(20) primary key,
 PBno    varchar(20),
-Gno     varchar(20),
-Sno     varchar(20),
+Gno     varchar(20) not null,
+Sno     varchar(20) not null,
 Ptime   datetime,
 Pnum    int,
 Pprice  dec(10,4),
@@ -66,8 +66,8 @@ constraint FK_P_U foreign key (Pperson) references Users(username)
 create table Orders(
 Ono    varchar(20) primary key,
 OBno   varchar(20),
-Obuyer varchar(30),
-Gno    varchar(20),
+Obuyer varchar(30) not null,
+Gno    varchar(20) not null,
 Onum   int,
 Otime  datetime,
 Oprice dec(10,4),
@@ -113,5 +113,5 @@ create view V_Sell as
     from Store S,Purchase P,Good G
     where S.Pno=P.Pno and P.Gno=G.Gno
     group by G.Gno,G.Gname,G.Gprice
- go
+go
 select * from V_Sell
