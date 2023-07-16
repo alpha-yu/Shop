@@ -6,115 +6,102 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import module_login.*;
+import module_login.module_login;
 import module_shared.shared;
 
 import javax.swing.*;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class module_signup extends Application {
     static Stage stage;
     static TextField user;
-    static TextField psw;
-    static TextField pswcheck;
+    static PasswordField psw;
+    static PasswordField pswcheck;
     static ComboBox<String> role;
-    static String userTip = "Please enter the user name";
-    static String pswTip = "Please enter the password";
-    static String pswcheckTip = "Please enter the same password again";
+    static Button btSignup;
+    static Button btBack;
 
     public static void showSignup() {
-        Stage stage = new Stage();
-        TextField user = new TextField();
-        TextField psw = new TextField();
-        TextField pswcheck = new TextField();
-        ComboBox<String> role = new ComboBox<>();
+        stage = new Stage();
+        user = new TextField();
+        psw = new PasswordField();
+        pswcheck = new PasswordField();
+        role = new ComboBox<>();
 
-        stage.setTitle("Sign Up");
-        Font font = new Font("Times New Roman", 18);
-        Button btSignup = new Button("Sign Up");
-        Button btBack = new Button("BACK");
+        stage.setTitle("注册");
+        Font font = new Font("宋体", 18);
+        btSignup = new Button("注册");
+        btBack = new Button("返回");
 
         GridPane pane = new GridPane();
-
         pane.setHgap(5);
         pane.setAlignment(Pos.CENTER);
 
         //按钮大小字体设置
         Font btFont = new Font("黑体", 20);
-        String lightblue = "-fx-background-color: rgb(100,197,255);";
         btSignup.setPrefWidth(500);
         btBack.setPrefWidth(500);
         btSignup.setPrefHeight(40);
         btBack.setPrefHeight(40);
         btSignup.setFont(btFont);
         btBack.setFont(btFont);
-        btSignup.setStyle(lightblue);
-        btBack.setStyle(lightblue);
+        btSignup.setStyle(shared.blue_background + shared.white_text);
+        btBack.setStyle(shared.blue_background + shared.white_text);
         shared.button_change(btSignup);
         shared.button_change(btBack);
 
         //顶部pane部分
         GridPane titlePane = new GridPane();
-        Label titleLabel = new Label("SIGN UP");
+        Label titleLabel = new Label("注册");
         titleLabel.setFont(new Font("黑体", 45));
         titlePane.setAlignment(Pos.CENTER);
         titlePane.add(titleLabel, 0, 0);
 
         //user pane部分
         GridPane UserPane = new GridPane();
-        Label userLabel = new Label("User Name");
+        Label userLabel = new Label("用户名");
         userLabel.setFont(font);
         user.setFont(font);
         user.setPrefWidth(500);
-        user.setText(userTip);
-        user.setStyle("-fx-text-fill:#a9a9a9;");
+        user.setPromptText("请输入您的用户名");
         UserPane.add(userLabel, 0, 0);
         UserPane.add(user, 0, 1);
         UserPane.setVgap(5);
 
         //password pane部分
         GridPane pswPane = new GridPane();
-        Label pswLabel = new Label("Password");
+        Label pswLabel = new Label("密码");
         pswLabel.setFont(font);
         psw.setFont(font);
         psw.setPrefWidth(500);
-        psw.setText(pswTip);
-        psw.setStyle("-fx-text-fill:#a9a9a9;");
+        psw.setPromptText("请输入密码");
         pswPane.add(pswLabel, 0, 0);
         pswPane.add(psw, 0, 1);
         pswPane.setVgap(5);
 
         //password pane部分
         GridPane pswcheckPane = new GridPane();
-        Label pswcheckLabel = new Label("Confirm Password");
+        Label pswcheckLabel = new Label("密码确认");
         pswcheckLabel.setFont(font);
         pswcheck.setFont(font);
         pswcheck.setPrefWidth(500);
-        pswcheck.setText(pswcheckTip);
-        pswcheck.setStyle("-fx-text-fill:#a9a9a9;");
+        pswcheck.setPromptText("请再次输入密码");
         pswcheckPane.add(pswcheckLabel, 0, 0);
         pswcheckPane.add(pswcheck, 0, 1);
         pswcheckPane.setVgap(5);
 
-        //user文本框焦点相应事件，在文本框中给出提示
-        shared.tip_focusListener(user, userTip);
-        //psw文本框焦点相应事件，在文本框中给出提示
-        shared.tip_focusListener(psw, pswTip);
-        //pswcheck文本框焦点相应事件，在文本框中给出提示
-        shared.tip_focusListener(pswcheck, pswcheckTip);
-
         //role pane部分
         GridPane RolePane = new GridPane();
-        Label roleLabel = new Label("Role");
-        ObservableList<String> options = FXCollections.observableArrayList("customer");
+        Label roleLabel = new Label("用户类型");
+        ObservableList<String> options = FXCollections.observableArrayList(shared.TEXT_CUSTOMER);
         role.setItems(options);
-        role.setValue("customer");
+        role.setValue(shared.TEXT_CUSTOMER);
         role.setPrefWidth(500);
         role.setStyle("-fx-font: 18px \"Serif\";");
         roleLabel.setFont(font);
@@ -123,12 +110,12 @@ public class module_signup extends Application {
         RolePane.setVgap(5);
 
         //signup按钮相应事件，进行注册检验
-        btSignup.setOnMouseClicked(e->{
+        btSignup.setOnMouseClicked(e -> {
             signup_check();
         });
 
         //back按钮相应事件，返回登录页面
-        btBack.setOnMouseClicked(e->{
+        btBack.setOnMouseClicked(e -> {
             stage.close();
             module_login.showLogin();
         });
@@ -144,31 +131,59 @@ public class module_signup extends Application {
         pane.add(btSignup, 0, 5);
         pane.add(btBack, 0, 6);
         Scene scene = new Scene(pane, 800, 600);
-//        scene.setOnKeyPressed(e -> {
-//            if (e.getCode() == KeyCode.ENTER) {
-//                loginExecute();
-//            }
-//        });
+
+        //提供回车方法进行确认
+        scene.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                signup_check();
+            }
+        });
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
 
     //注册验证
-    public static void signup_check(){
-        if(user.getText().equals(userTip)){
-            String title = "Username Error";
-            String warning = "Please enter the user name!";
+    public static void signup_check() {
+        //空用户名判断
+        if (user.getText() == null || user.getText().trim().isEmpty()) {
+            String title = "用户名错误";
+            String warning = "请输入用户名";
             JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
             return;
         }
-        if(!psw.getText().equals(pswcheck.getText())){
-            String title = "Password Error";
-            String warning = "The password and confirmation password are different.\nPlease check and try again!";
+        //空密码判断
+        if (psw.getText() == null || psw.getText().trim().isEmpty()) {
+            String title = "密码错误";
+            String warning = "请输入密码";
+            JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
+            return;
+        }
+        //密码二次确认检验
+        if (!psw.getText().equals(pswcheck.getText())) {
+            String title = "密码错误";
+            String warning = "两次输入的密码不相同\n请检查后再次尝试";
             JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
             return;
         }
 
+        //用户名重复判断
+        try{
+            String sql="insert into Users(username,psw,AUTH) values(?,?,?)";
+            PreparedStatement ps = shared.dbConn.prepareStatement(sql);
+            ps.setString(1,user.getText());
+            ps.setString(2,psw.getText());
+            ps.setString(3, String.valueOf(shared.AUTH_CUSTOMER));
+            ps.executeUpdate();
+
+            String title = "成功";
+            String warning = "注册成功！";
+            JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
+        } catch (SQLException e) {
+            String title = "失败";
+            String warning = "用户名重复！";
+            JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
+        }
     }
 
     @Override

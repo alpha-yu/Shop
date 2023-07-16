@@ -6,32 +6,35 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import module_shared.shared;
-import module_signup.*;
+import module_signup.module_signup;
+
+import javax.swing.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class module_login extends Application {
     static Stage stage;
     static TextField user;
-    static TextField psw;
+    static PasswordField psw;
     static ComboBox<String> role;
 
     public static void showLogin() {
-        Stage stage = new Stage();
-        TextField user = new TextField();
-        TextField psw = new TextField();
-        ComboBox<String> role = new ComboBox<>();
+        stage = new Stage();
+        user = new TextField();
+        psw = new PasswordField();
+        role = new ComboBox<>();
 
-        stage.setTitle("Log In");
-        Font font = new Font("Times New Roman", 18);
-        Button btLogin = new Button("Log In");
-        Button btSignup = new Button("Sign Up");
+        stage.setTitle("登录");
+        Font font = new Font("宋体", 18);
+        Button btLogin = new Button("登录");
+        Button btSignup = new Button("注册");
         GridPane pane = new GridPane();
 
         pane.setHgap(5);
@@ -39,62 +42,52 @@ public class module_login extends Application {
 
         //按钮大小字体设置
         Font btFont = new Font("黑体", 20);
-        String lightblue = "-fx-background-color: rgb(100,197,255);";
         btLogin.setPrefWidth(500);
         btSignup.setPrefWidth(500);
         btLogin.setPrefHeight(40);
         btSignup.setPrefHeight(40);
         btLogin.setFont(btFont);
         btSignup.setFont(btFont);
-        btLogin.setStyle(lightblue);
-        btSignup.setStyle(lightblue);
+        btLogin.setStyle(shared.blue_background + shared.white_text);
+        btSignup.setStyle(shared.blue_background + shared.white_text);
         shared.button_change(btLogin);
         shared.button_change(btSignup);
 
         //顶部pane部分
         GridPane titlePane = new GridPane();
-        Label titleLabel = new Label("SHOP MANAGERMENT");
+        Label titleLabel = new Label("超市管理系统");
         titleLabel.setFont(new Font("黑体", 45));
         titlePane.setAlignment(Pos.CENTER);
         titlePane.add(titleLabel, 0, 0);
 
         //user pane部分
-        String userTip = "Please enter your user name";
         GridPane UserPane = new GridPane();
-        Label userLabel = new Label("User Name");
+        Label userLabel = new Label("用户名");
         userLabel.setFont(font);
         user.setFont(font);
         user.setPrefWidth(500);
-        user.setText(userTip);
-        user.setStyle("-fx-text-fill:#a9a9a9;");
+        user.setPromptText("请输入您的用户名");
         UserPane.add(userLabel, 0, 0);
         UserPane.add(user, 0, 1);
         UserPane.setVgap(5);
 
         //password pane部分
-        String pswTip = "Please enter your password";
         GridPane pswPane = new GridPane();
-        Label pswLabel = new Label("Password");
+        Label pswLabel = new Label("密码");
         pswLabel.setFont(font);
         psw.setFont(font);
         psw.setPrefWidth(500);
-        psw.setText(pswTip);
-        psw.setStyle("-fx-text-fill:#a9a9a9;");
+        psw.setPromptText("请输入您的密码");
         pswPane.add(pswLabel, 0, 0);
         pswPane.add(psw, 0, 1);
         pswPane.setVgap(5);
 
-        //user文本框焦点相应事件，在文本框中给出提示
-        shared.tip_focusListener(user, userTip);
-        //psw文本框焦点相应事件，在文本框中给出提示
-        shared.tip_focusListener(psw, pswTip);
-
         //role pane部分
         GridPane RolePane = new GridPane();
-        Label roleLabel = new Label("Role");
-        ObservableList<String> options = FXCollections.observableArrayList("customer", "seller", "purchaser", "manager", "administrator");
+        Label roleLabel = new Label("用户类型");
+        ObservableList<String> options = FXCollections.observableArrayList(shared.TEXT_CUSTOMER, shared.TEXT_SELLER, shared.TEXT_PURCHASER, shared.TEXT_MANAGER, shared.TEXT_ADMINISTRATOR);
         role.setItems(options);
-        role.setValue("customer");
+        role.setValue(shared.TEXT_CUSTOMER);
         role.setPrefWidth(500);
         role.setStyle("-fx-font: 18px \"Serif\";");
         roleLabel.setFont(font);
@@ -102,8 +95,13 @@ public class module_login extends Application {
         RolePane.add(role, 0, 1);
         RolePane.setVgap(5);
 
+        //login按钮相应事件，进行登录验证
+        btLogin.setOnMouseClicked(e -> {
+            loginExecute();
+        });
+
         //signup按钮相应事件，跳转至signup界面，关闭当前界面
-        btSignup.setOnMouseClicked(e->{
+        btSignup.setOnMouseClicked(e -> {
             stage.close();
             module_signup.showSignup();
         });
@@ -118,18 +116,60 @@ public class module_login extends Application {
         pane.add(btLogin, 0, 4);
         pane.add(btSignup, 0, 5);
         Scene scene = new Scene(pane, 800, 600);
-//        scene.setOnKeyPressed(e -> {
-//            if (e.getCode() == KeyCode.ENTER) {
-//                loginExecute();
-//            }
-//        });
+
+        //提供回车方法进行确认
+        scene.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                loginExecute();
+            }
+        });
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
 
     public static void loginExecute() {
+        try {
+            //空用户名判断
+            if (user.getText() == null || user.getText().trim().isEmpty()) {
+                String title = "用户名错误";
+                String warning = "请输入用户名";
+                JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
+                return;
+            }
+            //空密码判断
+            if (psw.getText() == null || psw.getText().trim().isEmpty()) {
+                String title = "密码错误";
+                String warning = "请输入密码";
+                JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
+                return;
+            }
 
+            String sql = "select * from Users where username = ? and psw = ? and AUTH = ?";
+            PreparedStatement ps = shared.dbConn.prepareStatement(sql);
+            ps.setString(1, user.getText());
+            ps.setString(2, psw.getText());
+            ps.setString(3, String.valueOf(shared.text_to_AUTH(role.getValue())));
+            ResultSet rs = ps.executeQuery();
+
+            //登陆成功
+            if (rs.next()) {
+                String title = "登录成功";
+                String warning = "登陆成功";
+                JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
+                //页面跳转
+            }
+            //登录失败
+            else{
+                String title = "登录失败";
+                String warning = "用户名或密码错误！";
+                JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
+            }
+        } catch (SQLException e) {
+            String title = "登录失败";
+            String warning = "用户名或密码错误！";
+            JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
+        }
     }
 
     @Override
