@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import module_login.module_login;
 import module_main.module_main;
+import module_shared.User;
 import module_shared.shared;
 
 import java.sql.ResultSet;
