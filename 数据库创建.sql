@@ -136,6 +136,6 @@ create trigger t_Purchase_to_Store
 as
 begin
 	declare @no varchar(20),@num int
-select @no=Pno,@num=Pnum from inserted
+    select @no=Pno,@num=Pnum from inserted
     insert into Store values (@no,@num)
 end
