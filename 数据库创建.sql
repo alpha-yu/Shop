@@ -115,14 +115,22 @@ create view V_Sell as
     group by G.Gno,G.Gname,G.Gprice
 go
 create view V_Order as
-    select OBno,Obuyer,count(*) as Osum,sum(Oprice) as SumPrice,Otime,Oinfo
-    from Orders O
-    group by OBno,Obuyer,Oprice,Otime,Oinfo
+    select distinct O2.OBno,Obuyer,Osum,SumPrice,Otime,Oinfo
+    from (
+        select OBno,count(*) as Osum,sum(Oprice) as SumPrice
+        from Orders
+        group by OBno
+        ) O1, Orders O2
+    where O1.OBno=O2.OBno
 go
 create view V_Purchase as
-    select PBno,count(*) as Psum,sum(Pprice) as SumPrice,Ptime,Pperson
-    from Purchase
-    group by PBno,Pprice,Ptime,Pperson
+    select distinct P2.PBno,Psum,SumPrice,Ptime,Pperson
+    from (
+        select PBno,count(*) as Psum,sum(Pprice) as SumPrice
+        from Purchase
+        group by PBno
+        ) P1,Purchase P2
+    where P1.PBno=P2.PBno
 go
 
 --添加初始管理员
