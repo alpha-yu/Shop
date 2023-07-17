@@ -65,6 +65,4 @@ public abstract class User extends Application{
     public void setUaddr(String uaddr) {
         Uaddr = uaddr;
     }
-
-    public abstract void ShowMenu();
 }
