@@ -18,8 +18,12 @@ import javafx.event.EventHandler;
 
 public class Manager extends User
 {
-//    @Override
-    public void  ShowMenu()
+    public Manager(String _userName, String _password, int Auth) {
+        super(_userName, _password, Auth);
+    }
+
+    //    @Override
+    public void ShowMenu()
     {
         int Auth = 3;
 

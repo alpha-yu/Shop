@@ -1,30 +1,24 @@
 package module_shared;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 
 // 用户基类，其他用户类型继承此基类
 // 王昕阳
-public abstract class User extends Application{
+public abstract class User extends Application {
+    protected static Stage stage;
     private String _userName;
     private String _password;
     private int auth;
     private String UCIF;
     private String Uaddr;
+
+    public User(String _userName,String _password,int Auth){
+        set_userName(_userName);
+        set_password(_password);
+        setAuth(Auth);
+    }
 
     public String get_userName() {
         return _userName;
@@ -64,5 +58,13 @@ public abstract class User extends Application{
 
     public void setUaddr(String uaddr) {
         Uaddr = uaddr;
+    }
+
+    public GridPane get_titlePane() {
+        return shared.init_titlePane(this);
+    }
+
+    public static void close(){
+        stage.close();
     }
 }
