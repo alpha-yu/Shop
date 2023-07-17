@@ -11,7 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import module_menu.menu_admin;
+import module_menu.*;
 import module_shared.shared;
 import module_signup.module_signup;
 
@@ -42,8 +42,8 @@ public class module_login extends Application {
         pane.setAlignment(Pos.CENTER);
 
         //按钮大小字体设置
-        shared.init_Button_Style(btLogin,40,500);
-        shared.init_Button_Style(btSignup,40,500);
+        shared.init_Button_Style(btLogin, 40, shared.width);
+        shared.init_Button_Style(btSignup, 40, shared.width);
         shared.button_change(btLogin);
         shared.button_change(btSignup);
 
@@ -59,7 +59,7 @@ public class module_login extends Application {
         Label userLabel = new Label("用户名");
         userLabel.setFont(font);
         user.setFont(font);
-        user.setPrefWidth(500);
+        user.setPrefWidth(shared.width);
         user.setPromptText("请输入您的用户名");
         UserPane.add(userLabel, 0, 0);
         UserPane.add(user, 0, 1);
@@ -70,7 +70,7 @@ public class module_login extends Application {
         Label pswLabel = new Label("密码");
         pswLabel.setFont(font);
         psw.setFont(font);
-        psw.setPrefWidth(500);
+        psw.setPrefWidth(shared.width);
         psw.setPromptText("请输入您的密码");
         pswPane.add(pswLabel, 0, 0);
         pswPane.add(psw, 0, 1);
@@ -82,7 +82,7 @@ public class module_login extends Application {
         ObservableList<String> options = FXCollections.observableArrayList(shared.TEXT_CUSTOMER, shared.TEXT_SELLER, shared.TEXT_PURCHASER, shared.TEXT_MANAGER, shared.TEXT_ADMINISTRATOR);
         role.setItems(options);
         role.setValue(shared.TEXT_CUSTOMER);
-        role.setPrefWidth(500);
+        role.setPrefWidth(shared.width);
         role.setStyle("-fx-font: 18px \"Serif\";");
         roleLabel.setFont(font);
         RolePane.add(roleLabel, 0, 0);
@@ -91,9 +91,7 @@ public class module_login extends Application {
 
         //login按钮相应事件，进行登录验证
         btLogin.setOnMouseClicked(e -> {
-            if (loginExecute()) {
-                jump_to_menu(role.getValue());
-            }
+            loginExecute();
         });
 
         //signup按钮相应事件，跳转至signup界面，关闭当前界面
@@ -124,21 +122,21 @@ public class module_login extends Application {
         stage.show();
     }
 
-    private static boolean loginExecute() {
+    private static void loginExecute() {
         try {
             //空用户名判断
             if (user.getText() == null || user.getText().trim().isEmpty()) {
                 String title = "用户名错误";
                 String warning = "请输入用户名";
                 JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
-                return false;
+                return;
             }
             //空密码判断
             if (psw.getText() == null || psw.getText().trim().isEmpty()) {
                 String title = "密码错误";
                 String warning = "请输入密码";
                 JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
-                return false;
+                return;
             }
 
             String sql = "select * from Users where username = ? and psw = ? and AUTH = ?";
@@ -153,41 +151,48 @@ public class module_login extends Application {
                 String title = "登录成功";
                 String warning = "登陆成功";
                 JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
-                return true;
+                jump_to_menu(user.getText(), psw.getText(), shared.text_to_AUTH(role.getValue()));
             }
             //登录失败
             else {
                 String title = "登录失败";
                 String warning = "请检查用户名和密码，并选择对应身份类型！";
                 JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
-                return false;
             }
         } catch (SQLException e) {
             String title = "登录失败";
             String warning = "用户名或密码错误！";
             JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
-            return false;
         }
     }
 
-    private static void jump_to_menu(String role) {
-        int auth = shared.text_to_AUTH(role);
-        if (auth == shared.AUTH_CUSTOMER) {
-            stage.close();
-        }
-        if (auth == shared.AUTH_SELLER) {
-            stage.close();
-        }
+    private static void jump_to_menu(String name, String psw, int auth) {
         if (auth == shared.AUTH_PURCHASER) {
+            menu_supplier menu = new menu_supplier(name, psw, auth);
             stage.close();
+            menu.showMenuSupplier();
         }
         if (auth == shared.AUTH_MANAGER) {
+            menu_manager menu = new menu_manager(name, psw, auth);
             stage.close();
+            menu.ShowMenuManager();
         }
         if (auth == shared.AUTH_ADMINISTRATOR) {
-            menu_admin.showMenuAdmin();
+            menu_admin menu = new menu_admin(name, psw, auth);
             stage.close();
+            menu.showMenuAdmin();
         }
+        if (auth == shared.AUTH_CUSTOMER) {
+            menu_customer menu = new menu_customer(name, psw, auth);
+            stage.close();
+            menu.showMenuCustomer();
+        }
+        if (auth == shared.AUTH_SELLER) {
+            menu_seller menu = new menu_seller(name, psw, auth);
+            stage.close();
+            menu.showMenuSeller();
+        }
+
     }
 
     @Override
