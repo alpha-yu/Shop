@@ -9,9 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import module_login.module_login;
 import module_main.module_main;
-import module_shared.User;
 import module_shared.shared;
 
 import java.sql.ResultSet;
@@ -21,10 +19,12 @@ import java.util.List;
 import java.sql.Timestamp;
 
 import static module_shared.shared.dbConn;
+import static module_shared.shared.text_to_AUTH;
 
 public class OrderInterface extends Application {
     private List<Order> orders; // 模拟订单数据
     private Order order;
+    private int auth;
     public OrderInterface(Order order){
         this.order = order;
     }
@@ -170,6 +170,6 @@ public class OrderInterface extends Application {
         }
     }
     private OrderInterfaceOutline createOderView() {
-        return new OrderInterfaceOutline();
+        return new OrderInterfaceOutline(auth);
     }
 }
