@@ -44,15 +44,10 @@ public class module_signup extends Application {
         pane.setAlignment(Pos.CENTER);
 
         //按钮大小字体设置
-        Font btFont = new Font("黑体", 20);
-        btSignup.setPrefWidth(500);
-        btBack.setPrefWidth(500);
-        btSignup.setPrefHeight(40);
-        btBack.setPrefHeight(40);
-        btSignup.setFont(btFont);
-        btBack.setFont(btFont);
-        btSignup.setStyle(shared.blue_background + shared.white_text);
-        btBack.setStyle(shared.blue_background + shared.white_text);
+        shared.init_Button_Font(btSignup);
+        shared.init_Button_Font(btBack);
+        shared.init_Button_Style(btSignup,40,500);
+        shared.init_Button_Style(btBack,40,500);
         shared.button_change(btSignup);
         shared.button_change(btBack);
 
@@ -168,11 +163,11 @@ public class module_signup extends Application {
         }
 
         //用户名重复判断
-        try{
-            String sql="insert into Users(username,psw,AUTH) values(?,?,?)";
+        try {
+            String sql = "insert into Users(username,psw,AUTH) values(?,?,?)";
             PreparedStatement ps = shared.dbConn.prepareStatement(sql);
-            ps.setString(1,user.getText());
-            ps.setString(2,psw.getText());
+            ps.setString(1, user.getText());
+            ps.setString(2, psw.getText());
             ps.setString(3, String.valueOf(shared.AUTH_CUSTOMER));
             ps.executeUpdate();
 
