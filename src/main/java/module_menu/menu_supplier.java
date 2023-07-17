@@ -46,7 +46,7 @@ public class menu_supplier extends User {
         shared.init_Button_Style(sBt, 40, 100);
 
         sBt.setOnAction(e -> {
-            PurchaseMenu purchaseMenu = new PurchaseMenu();
+            PurchaseMenu purchaseMenu = new PurchaseMenu(super.get_userName());
             try {
                 purchaseMenu.start(new Stage());
 //                stage.close();

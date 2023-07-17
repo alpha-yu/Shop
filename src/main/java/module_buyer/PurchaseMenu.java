@@ -26,8 +26,13 @@ import static module_shared.shared.*;
 
 public class PurchaseMenu extends Application {
     private List<Good> goods; // 模拟订单数据
+    private String username;
     public static void main(String[] args) {
         launch(args);
+    }
+    public PurchaseMenu(String username)
+    {
+        this.username = username;
     }
     @Override
     public void start(Stage primaryStage) {

@@ -2,8 +2,10 @@ package module_order;
 
 import javafx.beans.property.*;
 import javafx.beans.value.ObservableValue;
+import module_browse.Good;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Order {
     private String orderId;     //订单号
@@ -27,6 +29,9 @@ public class Order {
     public Order(String orderBatchId, String customer, int num, double amount, Timestamp time, int state){
         this("0", orderBatchId, customer, "0", num, amount, time,state);
     }
+
+
+
     public String getOrderId() {
         return orderId;
     }
@@ -72,4 +77,6 @@ public class Order {
     }
     public IntegerProperty stateProperty() { return new SimpleIntegerProperty(state);
     }
+
+
 }

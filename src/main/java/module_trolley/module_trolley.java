@@ -19,11 +19,16 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import module_browse.Good;
 import module_browse.module_browse;
+import module_order.Order;
 import module_shared.shared;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,26 +50,7 @@ public class module_trolley extends Application {
             goodList.set(i, GoodsInfo(gridPane, goodList.get(i), 3, i));
         }
     }
-//    public static void addToOrders(List<Good> goodList)
-//    {
-//        String dbURL="jdbc:sqlserver://localhost:1433;DatabaseName=Shop";
-//        String userName="sa";
-//        String userPwd="123456";
-//        try {
-//            conn[0] = DriverManager.getConnection(dbURL, userName, userPwd);
-//            // 从数据库中获取数据
-//            Statement stmt = conn[0].createStatement();
-//            ResultSet rs = stmt.executeQuery("insert into Orders values("+);
-//            while (rs.next()){
-//                System.out.println(rs.getString("Gno") + "\t" + rs.getString("Gname") + "\t" + rs.getString("Gprice") + "\t" + rs.getString("Ginfo") + "\t" + rs.getString("MATL") + "\t" + rs.getString("CATEG") + "\t" + rs.getString("EXPdate"));
-//                goodList.add(new Good(rs.getString("Gno"),rs.getString("Gname"), rs.getDouble("Gprice"),rs.getString("Ginfo"),rs.getString("MATL"),rs.getString("CATEG"),rs.getString("EXPdate")));
-//            }
-//
-//        }catch(SQLException e){
-//            e.printStackTrace();
-//            System.out.println("数据库连接失败");
-//        }
-//    }
+
 
     public static Good GoodsInfo(GridPane rightGirdPane, Good good, int x, int y) {
 //        gridPane.getChildren().clear();
@@ -307,7 +293,8 @@ public class module_trolley extends Application {
         checkoutButton.setFont(new Font(16));
         checkoutButton.setOnAction(actionEvent -> {
             //弹窗提示已经下单成功
-//            addToOrders(goodList);
+            //addToOrders(goodList);
+            generateOrder();
             System.out.println("下单成功");
             goodList.clear();
         });
@@ -319,4 +306,43 @@ public class module_trolley extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-}
+
+
+        public static void generateOrder() {
+
+            // 计算总价
+            double totalPrice = getTotalPrice(goodList);
+
+            try
+            {
+                String sql = "insert into Orders " + "values (?, ?, ?, ?, ?, ?, ?, ?)";
+
+                LocalDateTime currentTime = LocalDateTime.now();
+                DateTimeFormatter strFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+                DateTimeFormatter sqlFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String strtime = currentTime.format(strFormatter);
+                String sqltime = currentTime.format(sqlFormatter);
+
+                PreparedStatement ps = shared.dbConn.prepareStatement(sql);
+                ps.setString(1, "O" + strtime);
+                ps.setString(2, "OP" + strtime);
+                ps.setString(3, "user");
+                ps.setString(4, goodList.get(0).getGno());
+                ps.setString(5, String.valueOf(goodList.get(0).getNum()));
+                ps.setString(6, sqltime);
+                ps.setString(7, String.valueOf(totalPrice));
+                ps.setString(8, "0");
+                ps.executeUpdate();
+                ps.close();
+            }
+            catch (Exception e)
+            {
+                System.out.println(e);
+            }
+
+            // 清空购物车
+            goodList.clear();
+        }
+
+    }
+
