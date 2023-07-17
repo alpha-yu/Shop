@@ -5,6 +5,7 @@ package module_manager;
 import javafx.geometry.Insets;
 import module_order.OrderInterfaceOutline;
 import module_purchase.PurchaseScheduleOutline;
+import module_shared.shared;
 import module_shared.User;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,9 +18,11 @@ import javafx.event.EventHandler;
 
 public class Manager extends User
 {
-    @Override
-    public void ShowMenu()
+//    @Override
+    public void  ShowMenu()
     {
+        shared SharedModule= new shared();
+
         Stage stage = new Stage();
         stage.setTitle("ManagerMenu");
 
@@ -32,11 +35,9 @@ public class Manager extends User
         Font btFont = new Font("黑体", 20);
 
         Button bt1 = new Button("商品浏览");
-        bt1.setPrefWidth(200);
-        bt1.setPrefHeight(40);
-        bt1.setFont(btFont);
-        bt1.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
-        button_change(bt1);
+        SharedModule.init_Button_Style(bt1, 40, 200);
+        SharedModule.button_change(bt1);
+        SharedModule.init_GridPane_Style();
 
         bt1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -51,11 +52,9 @@ public class Manager extends User
         });
 
         Button bt2 = new Button("采购表审批");
-        bt2.setPrefWidth(200);
-        bt2.setPrefHeight(40);
-        bt2.setFont(btFont);
-        bt2.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
-        button_change(bt2);
+        SharedModule.init_Button_Style(bt2, 40, 200);
+        SharedModule.button_change(bt2);
+
         bt2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event)
@@ -72,11 +71,8 @@ public class Manager extends User
         });
 
         Button bt3 = new Button("订单信息查询");
-        bt3.setPrefWidth(200);
-        bt3.setPrefHeight(40);
-        bt3.setFont(btFont);
-        bt3.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
-        button_change(bt3);
+        SharedModule.init_Button_Style(bt3, 40, 200);
+        SharedModule.button_change(bt3);
 
         bt3.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -93,11 +89,8 @@ public class Manager extends User
         });
 
         Button bt4 = new Button("折扣设置");
-        bt4.setPrefWidth(200);
-        bt4.setPrefHeight(40);
-        bt4.setFont(btFont);
-        bt4.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
-        button_change(bt4);
+        SharedModule.init_Button_Style(bt4, 40, 200);
+        SharedModule.button_change(bt4);
         bt4.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event)
