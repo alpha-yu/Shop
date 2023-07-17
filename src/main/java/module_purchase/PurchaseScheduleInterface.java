@@ -24,11 +24,11 @@ import static module_shared.shared.dbConn;
 
 public class PurchaseScheduleInterface extends Application {
     private List<PurchaseSchedule> orders; // 模拟采购表数据
-    private User user;
+    private int auth;
     private PurchaseSchedule order;
-    public PurchaseScheduleInterface(PurchaseSchedule order, User user){
+    public PurchaseScheduleInterface(PurchaseSchedule order, int auth){
         this.order = order;
-        this.user = user;
+        this.auth = auth;
     }
     public static void main(String[] args) {
         launch(args);
@@ -84,7 +84,7 @@ public class PurchaseScheduleInterface extends Application {
         TableColumn<PurchaseSchedule, Timestamp> timeColumn = new TableColumn<>("创建时间");
         TableColumn<PurchaseSchedule, String> buyerIdColumn = new TableColumn<>("采购员");
         TableColumn<PurchaseSchedule, Integer> stateColumn = new TableColumn<>("订单状态");
-        TableColumn<PurchaseSchedule, Void> buttonColumn = new TableColumn<>("操作");
+
 
         //
         Label titleLabelTip = new Label("批次:【"+order.getPurchaseBatchId()+"】的采购单");
@@ -117,6 +117,53 @@ public class PurchaseScheduleInterface extends Application {
             }
         });
         //添加审批操作
+        if(auth == 3){
+            TableColumn<PurchaseSchedule, Void> buttonColumn = review(tableView);
+            tableView.getColumns().addAll(purchaseIdColumn, goodIdColumn, supplierIdColumn, numColumn, amountColumn, timeColumn, buyerIdColumn, stateColumn, buttonColumn);
+        } else {
+            tableView.getColumns().addAll(purchaseIdColumn, goodIdColumn, supplierIdColumn, numColumn, amountColumn, timeColumn, buyerIdColumn, stateColumn);
+        }
+
+        // 设置表格数据
+        tableView.setItems(FXCollections.observableList(orders));
+        //使订单按时间由近到远排序
+        timeColumn.setSortType(TableColumn.SortType.DESCENDING);
+        tableView.getSortOrder().add(timeColumn);
+        tableView.setSortPolicy(null);//禁止表头排序
+        // 设置搜索按钮的点击事件
+        searchButton.setOnAction(event -> {
+            String searchOrderId = searchField.getText();
+            if (searchOrderId.isEmpty()) {
+                tableView.setItems(FXCollections.observableList(orders));
+            } else {
+                List<PurchaseSchedule> searchResult = new ArrayList<>();
+                for (PurchaseSchedule order : orders) {
+                    if (order.getPurchaseId().contains(searchOrderId)) {
+                        searchResult.add(order);
+                    }
+                }
+                tableView.setItems(FXCollections.observableList(searchResult));
+            }
+        });
+
+
+        // 创建布局
+        BorderPane borderPane = new BorderPane();
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(10));
+        vBox.getChildren().addAll(titleLabel, hBox, titleLabelTip, tableView);
+        borderPane.setCenter(vBox);
+        // 创建场景
+        Scene scene = new Scene(borderPane, 800, 600);
+        // 设置场景并显示
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+    //审批操作
+    private TableColumn review(TableView<PurchaseSchedule> tableView) {
+        TableColumn<PurchaseSchedule, Void> buttonColumn = new TableColumn<>("操作");
         Callback<TableColumn<PurchaseSchedule, Void>, TableCell<PurchaseSchedule, Void>> cellFactory = new Callback<>() {
             @Override
             public TableCell<PurchaseSchedule, Void> call(final TableColumn<PurchaseSchedule, Void> param) {
@@ -185,45 +232,7 @@ public class PurchaseScheduleInterface extends Application {
             }
         };
         buttonColumn.setCellFactory(cellFactory);
-
-        // 添加列到表格
-        tableView.getColumns().addAll(purchaseIdColumn, goodIdColumn, supplierIdColumn, numColumn, amountColumn, timeColumn, buyerIdColumn, stateColumn, buttonColumn);
-        // 设置表格数据
-        tableView.setItems(FXCollections.observableList(orders));
-        //使订单按时间由近到远排序
-        timeColumn.setSortType(TableColumn.SortType.DESCENDING);
-        tableView.getSortOrder().add(timeColumn);
-        tableView.setSortPolicy(null);//禁止表头排序
-        // 设置搜索按钮的点击事件
-        searchButton.setOnAction(event -> {
-            String searchOrderId = searchField.getText();
-            if (searchOrderId.isEmpty()) {
-                tableView.setItems(FXCollections.observableList(orders));
-            } else {
-                List<PurchaseSchedule> searchResult = new ArrayList<>();
-                for (PurchaseSchedule order : orders) {
-                    if (order.getPurchaseId().contains(searchOrderId)) {
-                        searchResult.add(order);
-                    }
-                }
-                tableView.setItems(FXCollections.observableList(searchResult));
-            }
-        });
-
-
-        // 创建布局
-        BorderPane borderPane = new BorderPane();
-        VBox vBox = new VBox();
-        vBox.setSpacing(10);
-        vBox.setPadding(new Insets(10));
-        vBox.getChildren().addAll(titleLabel, hBox, titleLabelTip, tableView);
-        borderPane.setCenter(vBox);
-        // 创建场景
-        Scene scene = new Scene(borderPane, 800, 600);
-        // 设置场景并显示
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        return buttonColumn;
     }
     // 初始化订单数据
     private void initData() {
@@ -275,6 +284,6 @@ public class PurchaseScheduleInterface extends Application {
         }
     }
     private PurchaseScheduleOutline createOderView() {
-        return new PurchaseScheduleOutline(user);
+        return new PurchaseScheduleOutline(auth);
     }
 }
