@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import module_browse.module_browse;
 import module_order.OrderInterfaceOutline;
 import module_purchase.PurchaseScheduleOutline;
 import module_shared.User;
@@ -26,7 +27,7 @@ public class menu_manager extends User {
     public void ShowMenuManager() {
         int Auth = 3;
         stage = new Stage();
-        stage.setTitle(shared.TEXT_PURCHASER);
+        stage.setTitle(shared.TEXT_MANAGER);
 
         GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
@@ -42,11 +43,15 @@ public class menu_manager extends User {
         s.init_GridPane_Style();
 
         bt1.setOnAction(e -> {
-            // 按下按钮时触发的函数
-            //function();
+            stage.setTitle(shared.TEXT_CUSTOMER);
 
-            // 切换场景
-            //primaryStage.setScene(scene);
+            module_browse b = new module_browse();
+            try {
+                b.start(new Stage());
+                stage.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         });
 
         Button bt2 = new Button("采购表审批");
@@ -77,21 +82,10 @@ public class menu_manager extends User {
             }
         });
 
-        Button bt4 = new Button("折扣设置");
-        s.init_Button_Style(bt4, 40, 200);
-        s.button_change(bt4);
-        bt4.setOnAction(e -> {
-            // 按下按钮时触发的函数
-            //function();
-
-            // 切换场景
-            //primaryStage.setScene(scene);
-        });
 
         pane.add(bt1, 0, 0);
         pane.add(bt2, 1, 0);
         pane.add(bt3, 0, 1);
-        pane.add(bt4, 1, 1);
 
         Scene scene = new Scene(pane, 800, 600);
         stage.setScene(scene);
