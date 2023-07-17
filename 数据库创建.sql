@@ -126,4 +126,4 @@ create view V_Purchase as
 go
 
 --添加初始管理员
-insert into Users values (admin,123456,4);
+insert into Users(username,psw,AUTH) values ('admin',123456,4);
