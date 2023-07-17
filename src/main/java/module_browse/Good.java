@@ -1,5 +1,10 @@
 package module_browse;
 
+import javafx.beans.binding.BooleanExpression;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 
 public class Good {
     private String Gno;
@@ -23,6 +28,10 @@ public class Good {
         this.MATL = MATL;
         this.CATEG = CATEG;
         this.EXPdate = EXPdate;
+    }
+    public Good(String gno, String gname, String ginfo, int num){
+        this(gno, gname, 0, ginfo, "null", "null", "null");
+        this.num = num;
     }
     public int getNum(){return num;}
     public void setNum(int n){num=n;}
@@ -82,6 +91,13 @@ public class Good {
     public void setEXPdate(String EXPdate) {
         this.EXPdate = EXPdate;
     }
-}
 
+    public ObservableValue<String> goodIdProperty() {
+        return new SimpleStringProperty(Gno);
+    }
+
+    public ObservableValue<String> goodNameProperty() { return new SimpleStringProperty(Gname); }
+
+    public IntegerProperty numProperty() { return new SimpleIntegerProperty(num);}
+}
 
