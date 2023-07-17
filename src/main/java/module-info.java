@@ -32,5 +32,5 @@ module com.example.demo {
     opens module_supplier_good  to javafx.fxml;
     opens module_trolley        to javafx.fxml;
     opens module_userInfo       to javafx.fxml;
-    
+
 }
