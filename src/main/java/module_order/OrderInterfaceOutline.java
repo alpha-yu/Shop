@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import module_login.module_login;
+import module_shared.User;
 import module_shared.shared;
 import module_main.*;
 
@@ -73,10 +74,10 @@ public class OrderInterfaceOutline extends Application {
         timeColumn.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
         stateColumn.setCellValueFactory(cellData -> cellData.getValue().stateProperty().asObject());
         //回调函数自定义单元格内容
-        stateColumn.setCellValueFactory(cellData -> {
-            IntegerProperty stateProperty = cellData.getValue().stateProperty();
-            return stateProperty.asObject();
-        });
+//        stateColumn.setCellValueFactory(cellData -> {
+//            IntegerProperty stateProperty = cellData.getValue().stateProperty();
+//            return stateProperty.asObject();
+//        });
         stateColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(Integer state, boolean empty) {
