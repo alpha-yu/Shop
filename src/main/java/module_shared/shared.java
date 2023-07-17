@@ -36,7 +36,9 @@ public class shared {
     public static String passwordStr = "123456";
 
     //按钮风格初始化
-    public static void init_Button_Style(Button bt){
+    public static void init_Button_Style(Button bt, double h, double w) {
+        bt.setPrefHeight(h);
+        bt.setPrefWidth(w);
         bt.setStyle(blue_background + white_text + shared.round);
     }
 
