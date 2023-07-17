@@ -1,7 +1,10 @@
 package module_shared;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
 import java.sql.Connection;
@@ -28,7 +31,9 @@ public class shared {
     public static final Insets menuPadding = new Insets(20, 20, 20, 20);
     public static final double gap = 20;
     public static final String round = "-fx-background-radius: 10px;-fx-border-radius: 10px;";
+    public static final Font title_font = new Font("黑体", 45);
     public static final Font func_font = new Font("黑体", 25);
+    public static final Font bt_font = new Font("黑体", 20);
     //数据库连接
     public static String dbURL = "jdbc:sqlserver://localhost;DatabaseName=Shop";
     public static Connection dbConn = null;
@@ -40,6 +45,32 @@ public class shared {
         bt.setPrefHeight(h);
         bt.setPrefWidth(w);
         bt.setStyle(blue_background + white_text + shared.round);
+    }
+
+    //菜单模块风格初始化
+    public static GridPane init_GridPane_Style(){
+        GridPane gp=new GridPane();
+        gp.setPrefWidth(220);
+        gp.setPrefHeight(120);
+        gp.setStyle(shared.grey_background+shared.round);
+        gp.setAlignment(Pos.CENTER);
+        gp.setVgap(10);
+        return gp;
+    }
+
+    //主菜单按钮字体初始化
+    public static void init_Button_Font(Button bt){
+        bt.setFont(shared.bt_font);
+    }
+
+    //菜单字体初始化
+    public static void init_funcLabel_Font(Label l){
+        l.setFont(shared.func_font);
+    }
+
+    //菜单字体初始化
+    public static void init_titleLabel_Font(Label l){
+        l.setFont(shared.title_font);
     }
 
     //按钮鼠标悬停提示
