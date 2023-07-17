@@ -47,7 +47,7 @@ public class shared {
     public static String dbURL = "jdbc:sqlserver://localhost:9615;DatabaseName=Shop";
     public static Connection dbConn = null;
     public static String userStr = "sa";
-    public static String passwordStr = "123456";
+    public static String passwordStr = "CHEN";
 
     //按钮风格初始化
     public static void init_Button_Style(Button bt, double h, double w) {
