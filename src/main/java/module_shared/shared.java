@@ -1,5 +1,6 @@
 package module_shared;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 
 import java.sql.Connection;
@@ -26,6 +27,8 @@ public class shared {
     public static final String darkblue_background = "-fx-background-color: #0056b3;";
     public static final String white_text = "-fx-text-fill:white;";
     public static final String grey_text = "-fx-text-fill:#a9a9a9;";
+    //菜单边界
+    public static final Insets menuPadding=new Insets(20,20,20,20);
 
     //按钮鼠标悬停提示
     public static void button_change(Button bt) {

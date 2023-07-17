@@ -11,9 +11,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import module_login.module_login;
+import module_shared.shared;
+import module_main.*;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Timestamp;
+
+import static module_shared.shared.dbConn;
 
 public class OrderInterfaceOutline extends Application {
     private List<Order> orders; // 模拟订单数据
@@ -22,6 +30,7 @@ public class OrderInterfaceOutline extends Application {
     }
     @Override
     public void start(Stage primaryStage) {
+//        module_main.SQL_connect();
         primaryStage.setTitle("Order Interface Outline");
         // 初始化订单数据
         initData();
@@ -125,6 +134,7 @@ public class OrderInterfaceOutline extends Application {
                                 OrderInterface root = createOderView(order);
                                 Stage newStage = new Stage();
                                 root.start(newStage);
+                                primaryStage.close();
                             }
                         });
                     }
@@ -160,9 +170,32 @@ public class OrderInterfaceOutline extends Application {
     // 初始化订单数据
     private void initData() {
         orders = new ArrayList<>();
-        orders.add(new Order("1001", "1", "张三", "#101",1,100.0, Timestamp.valueOf("2023-07-15 14:30:30"), 0));
-        orders.add(new Order("1002", "2","李四", "#102",1,200.0, Timestamp.valueOf("2023-07-15 15:30:30"), 0));
-        orders.add(new Order("1003", "3","王五", "#103",1,300.0, Timestamp.valueOf("2023-07-15 16:30:30"), 0));
+        //连接数据库，从数据库中读
+        module_main.SQL_connect();
+        try {
+            Statement st;
+            ResultSet rs;
+            String sql = "select * from V_Order";
+            st = shared.dbConn.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                try {
+                    String OBno = rs.getString(1);
+                    String Obuyer = rs.getString(2);
+                    int Osum = rs.getInt(3);
+                    double SumPrice = rs.getDouble(4);
+                    Timestamp Otime = rs.getTimestamp(5);
+                    int Oinfo = rs.getInt(6);
+                    Order order = new Order(OBno, Obuyer, Osum, SumPrice, Otime, Oinfo);
+                    orders.add(order);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            dbConn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     private OrderInterface createOderView(Order selectedItem) {
         return new OrderInterface(selectedItem);

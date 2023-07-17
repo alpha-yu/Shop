@@ -124,3 +124,6 @@ create view V_Purchase as
     from Purchase
     group by PBno,Pprice,Ptime,Pperson
 go
+
+--添加初始管理员
+insert into Users values (admin,123456,4);

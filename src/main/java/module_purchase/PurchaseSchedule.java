@@ -26,6 +26,9 @@ public class PurchaseSchedule {
         this.time = time;
         this.state = state;
     }
+    public PurchaseSchedule(String purchaseBatchId, int num, double amount, String buyerId, Timestamp time) {
+        this("0", purchaseBatchId, "0", "0", num, amount, buyerId, time, 0);
+    }
     public String getPurchaseId() {
         return purchaseId;
     }

@@ -1,19 +1,25 @@
 package module_order;
 
 import javafx.application.Application;
-import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import module_login.module_login;
+import module_main.module_main;
+import module_shared.shared;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Timestamp;
+
+import static module_shared.shared.dbConn;
 
 public class OrderInterface extends Application {
     private List<Order> orders; // 模拟订单数据
@@ -45,8 +51,10 @@ public class OrderInterface extends Application {
         searchField.setPrefWidth(600);
         searchField.setPromptText("请输入订单号");
         Button searchButton = new Button("搜索");
+        Button backButton = new Button("返回");
         //设置‘搜索’按钮颜色
         searchButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
+        backButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
         //当鼠标停留在按钮上时，颜色变深
         searchButton.setOnMouseEntered(event -> {
             searchButton.setStyle("-fx-background-color: #0056b3; -fx-text-fill: white;");
@@ -54,8 +62,22 @@ public class OrderInterface extends Application {
         searchButton.setOnMouseExited(event -> {
             searchButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
         });
+        backButton.setOnMouseEntered(event -> {
+            backButton.setStyle("-fx-background-color: #0056b3; -fx-text-fill: white;");
+        });
+        backButton.setOnMouseExited(event -> {
+            backButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
+        });
+        //返回按钮跳转到上一界面
+        backButton.setOnAction(e -> {
+            // 在这里实现跳转逻辑，可以打开新窗口或者加载新的界面
+            OrderInterfaceOutline root = createOderView();
+            Stage newStage = new Stage();
+            root.start(newStage);
+            primaryStage.close();
+        });
         //使文本框于搜索按钮并排
-        HBox hBox = new HBox(10, searchField, searchButton);
+        HBox hBox = new HBox(10, searchField, searchButton, backButton);
         //创建列表
         TableView<Order> tableView = new TableView<>();
         TableColumn<Order, String> orderIdColumn = new TableColumn<>("订单号");
@@ -74,29 +96,6 @@ public class OrderInterface extends Application {
         numColumn.setCellValueFactory(cellData -> cellData.getValue().numProperty().asObject());
         amountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
         timeColumn.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
-//        stateColumn.setCellValueFactory(cellData -> cellData.getValue().stateProperty().asObject());
-//        //回调函数自定义单元格内容
-//        stateColumn.setCellValueFactory(cellData -> {
-//            IntegerProperty stateProperty = cellData.getValue().stateProperty();
-//            return stateProperty.asObject();
-//        });
-//        stateColumn.setCellFactory(column -> new TableCell<>() {
-//            @Override
-//            protected void updateItem(Integer state, boolean empty) {
-//                super.updateItem(state, empty);
-//                if (empty || state == null) {
-//                    setText("");
-//                } else if (state == -1) {
-//                    setText("未发货");
-//                } else if (state == 0) {
-//                    setText("已发货");
-//                } else if (state == 1) {
-//                    setText("已签收");
-//                } else {
-//                    setText("状态异常");
-//                }
-//            }
-//        });
 
         // 添加列到表格
         tableView.getColumns().addAll(orderIdColumn, goodIdColumn, numColumn, amountColumn, timeColumn);
@@ -121,19 +120,7 @@ public class OrderInterface extends Application {
                 tableView.setItems(FXCollections.observableList(searchResult));
             }
         });
-        //双击元组跳转
-        tableView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) { // 双击事件
-                Order selectedItem = tableView.getSelectionModel().getSelectedItem();
-                if (selectedItem != null) {
-                    // 在这里实现跳转逻辑，可以打开新窗口或者加载新的界面
-                    Stage newStage = new Stage();
-                    Scene scene = new Scene(new AnchorPane()); // 创建一个空白的AnchorPane作为界面
-                    newStage.setScene(scene);
-                    newStage.show();
-                }
-            }
-        });
+
         // 创建布局
         BorderPane borderPane = new BorderPane();
         VBox vBox = new VBox();
@@ -151,6 +138,37 @@ public class OrderInterface extends Application {
     // 初始化订单数据
     private void initData() {
         orders = new ArrayList<>();
-        orders.add(order);
+        //连接数据库，从数据库中读
+        module_main.SQL_connect();
+        try {
+            Statement st;
+            ResultSet rs;
+            String sql = "select * from Orders " +
+                    "where Obno = '"+order.getOrderBatchId()+"';";
+            st = shared.dbConn.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                try {
+                    String Ono = rs.getString(1);
+                    String OBno = rs.getString(2);
+                    String Obuyer = rs.getString(3);
+                    String Gno = rs.getString(4);
+                    int Osum = rs.getInt(5);
+                    Timestamp Otime = rs.getTimestamp(6);
+                    double SumPrice = rs.getDouble(7);
+                    int Oinfo = rs.getInt(8);
+                    Order order = new Order(Ono, OBno, Obuyer, Gno, Osum, SumPrice, Otime, Oinfo);
+                    orders.add(order);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            dbConn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private OrderInterfaceOutline createOderView() {
+        return new OrderInterfaceOutline();
     }
 }

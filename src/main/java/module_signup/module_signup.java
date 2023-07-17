@@ -144,7 +144,7 @@ public class module_signup extends Application {
     }
 
     //注册验证
-    public static void signup_check() {
+    private static void signup_check() {
         //空用户名判断
         if (user.getText() == null || user.getText().trim().isEmpty()) {
             String title = "用户名错误";

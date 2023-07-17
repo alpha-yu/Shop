@@ -11,8 +11,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import module_shared.shared;
-import module_signup.module_signup;
+import module_shared.*;
+import module_signup.*;
+import module_menu.*;
 
 import javax.swing.*;
 import java.sql.PreparedStatement;
@@ -97,7 +98,9 @@ public class module_login extends Application {
 
         //login按钮相应事件，进行登录验证
         btLogin.setOnMouseClicked(e -> {
-            loginExecute();
+            if(loginExecute()){
+                jump_to_menu(role.getValue());
+            }
         });
 
         //signup按钮相应事件，跳转至signup界面，关闭当前界面
@@ -128,21 +131,21 @@ public class module_login extends Application {
         stage.show();
     }
 
-    public static void loginExecute() {
+    private static boolean loginExecute() {
         try {
             //空用户名判断
             if (user.getText() == null || user.getText().trim().isEmpty()) {
                 String title = "用户名错误";
                 String warning = "请输入用户名";
                 JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
-                return;
+                return false;
             }
             //空密码判断
             if (psw.getText() == null || psw.getText().trim().isEmpty()) {
                 String title = "密码错误";
                 String warning = "请输入密码";
                 JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
-                return;
+                return false;
             }
 
             String sql = "select * from Users where username = ? and psw = ? and AUTH = ?";
@@ -157,18 +160,40 @@ public class module_login extends Application {
                 String title = "登录成功";
                 String warning = "登陆成功";
                 JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
-                //页面跳转
+                return true;
             }
             //登录失败
             else{
                 String title = "登录失败";
                 String warning = "请检查用户名和密码，并选择对应身份类型！";
                 JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
+                return false;
             }
         } catch (SQLException e) {
             String title = "登录失败";
             String warning = "用户名或密码错误！";
             JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
+            return false;
+        }
+    }
+
+    private static void jump_to_menu(String role) {
+        int auth=shared.text_to_AUTH(role);
+        if(auth==shared.AUTH_CUSTOMER){
+            stage.close();
+        }
+        if(auth==shared.AUTH_SELLER){
+            stage.close();
+        }
+        if(auth==shared.AUTH_PURCHASER){
+            stage.close();
+        }
+        if(auth==shared.AUTH_MANAGER){
+            stage.close();
+        }
+        if(auth==shared.AUTH_ADMINISTRATOR) {
+            menu_admin.showMenuAdmin();
+            stage.close();
         }
     }
 
