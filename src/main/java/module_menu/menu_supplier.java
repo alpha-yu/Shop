@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import module_order.OrderInterfaceOutline;
+import module_purchase.PurchaseScheduleOutline;
 import module_shared.User;
 import module_shared.shared;
 
@@ -41,6 +43,17 @@ public class menu_supplier extends User {
         Button sBt = shared.init_Button_Font("进入");
         shared.button_change(sBt);
         shared.init_Button_Style(sBt, 40, 100);
+
+        sBt.setOnAction(e -> {
+            PurchaseScheduleOutline purchaseScheduleOutline = new PurchaseScheduleOutline(shared.AUTH_PURCHASER);
+            try {
+                purchaseScheduleOutline.start(new Stage());
+                stage.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
         supply.add(sLabel, 0, 0);
         supply.add(sBt, 0, 1);
         //采购表状态
@@ -49,6 +62,17 @@ public class menu_supplier extends User {
         Button siBt = shared.init_Button_Font("进入");
         shared.button_change(siBt);
         shared.init_Button_Style(siBt, 40, 100);
+
+        sBt.setOnAction(e -> {
+            PurchaseScheduleOutline purchaseScheduleOutline = new PurchaseScheduleOutline(shared.AUTH_PURCHASER);
+            try {
+                purchaseScheduleOutline.start(new Stage());
+                stage.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
         supplyInfo.add(siLabel, 0, 0);
         supplyInfo.add(siBt, 0, 1);
 
