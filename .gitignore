@@ -22,3 +22,6 @@ target/classes/module_manager/Manager$4.class
 demo.iml
 target/classes/module_information/UserInfo$PasswordInputDialog.class
 target/classes/module_information/UserInfo.class
+demo.iml
+.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_2.xml
+.idea/libraries/mssql_jdbc_9_2_1_jre8.xml
