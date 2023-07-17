@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -39,6 +40,9 @@ public class shared {
     public static final Font func_font = new Font("黑体", 25);
     public static final Font bt_font = new Font("黑体", 20);
     public static final Font user_font = new Font("宋体", 18);
+    public static final String ScrollPane_Style="-fx-background-color: transparent;" +
+            "-fx-border-color: transparent; -fx-border-radius: 25px; " +
+            "-fx-background-radius: 25px; -fx-vbar-policy: never;";
     //数据库连接
     public static String dbURL = "jdbc:sqlserver://localhost;DatabaseName=Shop";
     public static Connection dbConn = null;
@@ -130,6 +134,12 @@ public class shared {
     //菜单字体初始化
     public static void init_titleLabel_Font(Label l) {
         l.setFont(shared.title_font);
+    }
+
+    public static ScrollPane Grid_to_Scroll(GridPane gp){
+        ScrollPane sp=new ScrollPane(gp);
+        sp.setStyle(ScrollPane_Style);
+        return sp;
     }
 
     //角色名称转换为权限值

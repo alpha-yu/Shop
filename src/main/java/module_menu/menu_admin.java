@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import module_shared.User;
@@ -24,7 +25,10 @@ public class menu_admin extends User {
         GridPane titlePane = super.get_titlePane();
 
         //功能Pane：可用于上下滑动查看功能
-        GridPane funcPane=new GridPane();
+        GridPane subPane=new GridPane();
+        subPane.setAlignment(Pos.CENTER);
+        ScrollPane funcPane= shared.Grid_to_Scroll(subPane);
+
         //第一行功能
         GridPane firstline = new GridPane();
         firstline.setPrefWidth(shared.width);
@@ -37,12 +41,11 @@ public class menu_admin extends User {
         Button rcBt = shared.init_Button_Font("进入");
         shared.button_change(rcBt);
         shared.init_Button_Style(rcBt, 40, 100);
-
         role_change.add(rcLabel, 0, 0);
         role_change.add(rcBt, 0, 1);
-        firstline.add(role_change, 0, 0);
 
-        funcPane.add(firstline,0,0);
+        firstline.add(role_change, 0, 0);
+        subPane.add(firstline,0,0);
 
         //主体pane组合
         GridPane pane = new GridPane();
