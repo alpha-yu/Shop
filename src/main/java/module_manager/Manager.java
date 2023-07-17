@@ -21,6 +21,8 @@ public class Manager extends User
 //    @Override
     public void  ShowMenu()
     {
+        int Auth = 3;
+
         shared SharedModule= new shared();
 
         Stage stage = new Stage();
@@ -60,7 +62,7 @@ public class Manager extends User
             public void handle(ActionEvent event)
             {
                 // 按下按钮时触发的函数
-                PurchaseScheduleOutline purchaseScheduleOutline = new PurchaseScheduleOutline();
+                PurchaseScheduleOutline purchaseScheduleOutline = new PurchaseScheduleOutline(Auth);
                 try {
                     purchaseScheduleOutline.start(new Stage());
                     stage.close();
@@ -78,7 +80,7 @@ public class Manager extends User
             @Override
             public void handle(ActionEvent event)
             {
-                OrderInterfaceOutline orderInterfaceOutline = new OrderInterfaceOutline();
+                OrderInterfaceOutline orderInterfaceOutline = new OrderInterfaceOutline(Auth);
                 try {
                     orderInterfaceOutline.start(new Stage());
                     stage.close();
