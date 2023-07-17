@@ -45,7 +45,7 @@ public class menu_admin extends User {
         role_change.add(rcBt, 0, 1);
 
         //角色更改按钮跳转至角色信息界面
-        rcBt.setOnMouseClicked(e->{
+        rcBt.setOnAction(e->{
             module_userInfo.showUserInfo();
         });
 
