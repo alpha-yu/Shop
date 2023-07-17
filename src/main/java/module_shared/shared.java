@@ -44,10 +44,10 @@ public class shared {
             "-fx-border-color: transparent; -fx-border-radius: 25px; " +
             "-fx-background-radius: 25px; -fx-vbar-policy: never;";
     //数据库连接
-    public static String dbURL = "jdbc:sqlserver://localhost:9615;DatabaseName=Shop";
+    public static String dbURL = "jdbc:sqlserver://localhost;DatabaseName=Shop";
     public static Connection dbConn = null;
     public static String userStr = "sa";
-    public static String passwordStr = "CHEN";
+    public static String passwordStr = "123456";
 
     //按钮风格初始化
     public static void init_Button_Style(Button bt, double h, double w) {
