@@ -7,6 +7,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -29,18 +31,22 @@ public class menu_manager extends User {
         stage = new Stage();
         stage.setTitle(shared.TEXT_MANAGER);
 
-        GridPane pane = new GridPane();
-        pane.setAlignment(Pos.CENTER);
-        pane.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
-        pane.setHgap(50);
-        pane.setVgap(50);
+        GridPane titlePane = super.get_titlePane();
 
-        Font btFont = new Font("黑体", 20);
+        GridPane subPane=new GridPane();
+        subPane.setAlignment(Pos.CENTER);
+        ScrollPane funcPane= shared.Grid_to_Scroll(subPane);
 
-        Button bt1 = new Button("商品浏览");
-        s.init_Button_Style(bt1, 40, 200);
-        s.button_change(bt1);
-        s.init_GridPane_Style();
+        GridPane firstline = new GridPane();
+        firstline.setPrefWidth(shared.width);
+        firstline.setHgap(shared.gap);
+        firstline.setAlignment(Pos.CENTER);
+
+        GridPane gp1 = shared.init_GridPane_Style();
+        Label Label1 = shared.init_funcLabel_Font("商品浏览");
+        Button bt1 = shared.init_Button_Font("进入");
+        shared.button_change(bt1);
+        shared.init_Button_Style(bt1, 40, 100);
 
         bt1.setOnAction(e -> {
             stage.setTitle(shared.TEXT_CUSTOMER);
@@ -54,12 +60,23 @@ public class menu_manager extends User {
             }
         });
 
-        Button bt2 = new Button("采购表审批");
-        s.init_Button_Style(bt2, 40, 200);
-        s.button_change(bt2);
+        gp1.add(Label1, 0, 0);
+        gp1.add(bt1, 0, 1);
+        firstline.add(gp1, 0, 0);
+
+        GridPane secondline = new GridPane();
+        secondline.setPrefWidth(shared.width);
+        secondline.setHgap(shared.gap);
+        secondline.setAlignment(Pos.CENTER);
+
+        GridPane gp2 = shared.init_GridPane_Style();
+        Label Label2 = shared.init_funcLabel_Font("采购表审批");
+        Button bt2 = shared.init_Button_Font("进入");
+        shared.button_change(bt2);
+        shared.init_Button_Style(bt2, 40, 100);
 
         bt2.setOnAction(e -> {
-            PurchaseScheduleOutline purchaseScheduleOutline = new PurchaseScheduleOutline(1);
+            PurchaseScheduleOutline purchaseScheduleOutline = new PurchaseScheduleOutline(shared.AUTH_MANAGER);
             try {
                 purchaseScheduleOutline.start(new Stage());
                 stage.close();
@@ -68,12 +85,23 @@ public class menu_manager extends User {
             }
         });
 
-        Button bt3 = new Button("订单信息查询");
-        s.init_Button_Style(bt3, 40, 200);
-        s.button_change(bt3);
+        gp2.add(Label2, 0, 0);
+        gp2.add(bt2, 0, 1);
+        secondline.add(gp2,0,0);
+
+        GridPane thirdline = new GridPane();
+        thirdline.setPrefWidth(shared.width);
+        thirdline.setHgap(shared.gap);
+        thirdline.setAlignment(Pos.CENTER);
+
+        GridPane gp3 = shared.init_GridPane_Style();
+        Label Label3 = shared.init_funcLabel_Font("采购表审批");
+        Button bt3 = shared.init_Button_Font("进入");
+        shared.button_change(bt3);
+        shared.init_Button_Style(bt3, 40, 100);
 
         bt3.setOnAction(e -> {
-            OrderInterfaceOutline orderInterfaceOutline = new OrderInterfaceOutline(1);
+            OrderInterfaceOutline orderInterfaceOutline = new OrderInterfaceOutline(shared.AUTH_MANAGER);
             try {
                 orderInterfaceOutline.start(new Stage());
                 stage.close();
@@ -82,12 +110,24 @@ public class menu_manager extends User {
             }
         });
 
+        gp3.add(Label3, 0, 0);
+        gp3.add(bt3, 0, 1);
+        thirdline.add(gp3, 0, 0);
 
-        pane.add(bt1, 0, 0);
-        pane.add(bt2, 1, 0);
-        pane.add(bt3, 0, 1);
+        subPane.add(firstline,0,0);
+        subPane.add(secondline,0,1);
+        subPane.add(thirdline,0,2);
+        subPane.setVgap(shared.gap);
+
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.TOP_CENTER);
+        pane.setPadding(shared.menuPadding);
+        pane.setHgap(shared.gap);
+        pane.add(titlePane, 0, 0);
+        pane.add(funcPane, 0, 1);
 
         Scene scene = new Scene(pane, 800, 600);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
