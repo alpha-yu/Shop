@@ -454,6 +454,7 @@ public class module_browse extends Application {
         cartButton.setLayoutX(195);
         cartButton.setLayoutY(30);
         if (auth == shared.AUTH_CUSTOMER) buttonPane.getChildren().addAll(searchButton, cartButton, myButton);
+        else if(auth == shared.AUTH_MANAGER) buttonPane.getChildren().addAll(searchButton);
         else buttonPane.getChildren().addAll(searchButton, cartButton);
         GridPane.setColumnIndex(buttonPane, 2);
 

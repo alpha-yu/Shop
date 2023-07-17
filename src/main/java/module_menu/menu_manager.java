@@ -53,10 +53,9 @@ public class menu_manager extends User {
 
         bt1.setOnAction(e -> {
             stage.setTitle(shared.TEXT_CUSTOMER);
-            module_browse b = new module_browse();
+            module_browse b = new module_browse(super.get_userName(),super.getAuth());
             try {
                 b.start(new Stage());
-                stage.close();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -77,7 +76,6 @@ public class menu_manager extends User {
             PurchaseScheduleOutline purchaseScheduleOutline = new PurchaseScheduleOutline(shared.AUTH_MANAGER);
             try {
                 purchaseScheduleOutline.start(new Stage());
-                stage.close();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -103,7 +101,6 @@ public class menu_manager extends User {
             OrderInterfaceOutline orderInterfaceOutline = new OrderInterfaceOutline(shared.AUTH_MANAGER);
             try {
                 orderInterfaceOutline.start(new Stage());
-                stage.close();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
