@@ -20,16 +20,16 @@ import java.sql.ResultSet;
 import static module_shared.shared.*;
 
 public class UserInfo extends Application {
-    private String userId = "GK1001";
+    private String userId;
     private String password;
     private String connection;
     private String userAddress;
-    private int auth = 0;
+    private int auth;
 
-//    public UserInfo(String userId, int auth) {
-//        this.userId = userId;
-//        this.auth = auth;
-//    }
+    public UserInfo(String userId, int auth) {
+        this.userId = userId;
+        this.auth = auth;
+    }
 
     public static GridPane initGridPane(String title, String info) {
         Font font = new Font("宋体", 18);

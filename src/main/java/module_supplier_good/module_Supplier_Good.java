@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javafx.util.Callback;
+import module_browse.Good;
 import module_main.module_main;
 import module_order.Order;
 import module_shared.shared;
@@ -33,11 +34,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static module_shared.shared.dbConn;
+
 public class module_Supplier_Good extends Application {
 
     private Statement st;
-    //Good good;传递的参数
+    Good good;
+    String username;
     private List<Supplier_Good> supplierList;
+
+    public module_Supplier_Good(Good order, String username) {
+        this.good = order;
+        this.username = username;
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -54,28 +63,26 @@ public class module_Supplier_Good extends Application {
         }
     }
 
-
     public void showSupplier_Good() {
         ResultSet rs;
         //筛选指定的商品 sql
-        String sql = "select * from Supplier_Good";
+        module_main.SQL_connect();
+        String sql = "select * from Supplier_Good where Gno = ?";
         TableView<Supplier_Good> tableview = new TableView<>();
         supplierList = new ArrayList<>();
         try {
-            st = shared.dbConn.createStatement();
-            rs = st.executeQuery(sql);
-
+            PreparedStatement ps = dbConn.prepareStatement(sql);
+            ps.setString(1, good.getGno());
+            rs = ps.executeQuery();
             while (rs.next()) {
-                String Sno = rs.getString("Sno");
-                String Gno = rs.getString("Gno");
-                double Inprice = rs.getDouble("Inprice");
-                double Infee = rs.getDouble("Infee");
+                String Sno = rs.getString(1);
+                String Gno = rs.getString(2);
+                double Inprice = rs.getDouble(3);
+                double Infee = rs.getDouble(4);
                 Supplier_Good supplier_good = new Supplier_Good(Sno, Gno, Inprice, Infee);
                 supplierList.add(supplier_good);
-
             }
             rs.close();
-            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -254,7 +261,6 @@ public class module_Supplier_Good extends Application {
         purchaseStage.show();
     }
 
-
     //将采购单加入采购表中
     private void savePurchaseOrderToSchedule(Supplier_Good order, int quantityValue) {
         //将订单写到数据库中
@@ -267,7 +273,7 @@ public class module_Supplier_Good extends Application {
             String strtime = currentTime.format(strFormatter);
             String sqltime = currentTime.format(sqlFormatter);
 
-            PreparedStatement ps = shared.dbConn.prepareStatement(sql);
+            PreparedStatement ps = dbConn.prepareStatement(sql);
             ps.setString(1, "C" + strtime);
             ps.setString(2, "CP" + strtime);
             ps.setString(3, order.getGno());
@@ -275,18 +281,13 @@ public class module_Supplier_Good extends Application {
             ps.setString(5, sqltime);
             ps.setString(6, String.valueOf(quantityValue));
             ps.setString(7, String.valueOf(order.getInprice()));
-            ps.setString(8, "采购员1");
+            ps.setString(8, username);
             ps.setString(9, String.valueOf(0));
             ps.executeUpdate();
             ps.close();
 
-
         } catch (Exception e) {
             System.out.println(e);
         }
-
-
     }
-
-
 }

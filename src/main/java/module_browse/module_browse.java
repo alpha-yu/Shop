@@ -10,11 +10,15 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import module_information.UserInfo;
 import module_shared.shared;
 import module_trolley.module_trolley;
 
 import java.io.File;
-import java.sql.*;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,12 +31,21 @@ public class module_browse extends Application {
     public static String cateString = new String("");
     public static GridPane rightGridPane = new GridPane();
     public static int goodStore = 0;
+    public static Stage stage;
+    public static String userName;
+    public static int auth;
     static List<Good> trolleyGoods = new ArrayList<>();
+
     public module_browse() {
     }
 
     public module_browse(List<Good> trolleyGoods) {
         module_browse.trolleyGoods = trolleyGoods;
+    }
+
+    public module_browse(String userName, int auth) {
+        this.userName = userName;
+        this.auth = auth;
     }
 
     public static void cateSetOutput(VBox leftVBox, HashSet<String> cateSet) {
@@ -233,19 +246,20 @@ public class module_browse extends Application {
             // 从数据库中获取数据
             Statement stmt = shared.dbConn.createStatement();
             //全部
-            if (flag == 0){
+            if (flag == 0) {
                 goodList = AllGoods(stmt);
             }
             //搜索
-            if (flag == 1){
+            if (flag == 1) {
                 goodList = Search(stmt, textField.getText());
             }
             //分类
-            if (flag == 2){
+            if (flag == 2) {
                 goodList = CateGoods(stmt, cateString);
             }
             //库存量
-            if (flag == 3) {}
+            if (flag == 3) {
+            }
 
 
         } catch (SQLException e) {
@@ -322,9 +336,8 @@ public class module_browse extends Application {
         launch(args);
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
+    public static void showBrowse(String userName, int auth) {
+        stage = new Stage();
         GridPane root = new GridPane();
         root.setPrefSize(800, 600);
         root.setHgap(18);
@@ -418,23 +431,31 @@ public class module_browse extends Application {
         Button myButton = new Button("我的");
         myButton.setFont(new Font(13));
 
-        shared.init_Button_Style(cartButton,20,60);
+        shared.init_Button_Style(cartButton, 20, 60);
         shared.button_change(cartButton);
         cartButton.setOnAction(actionEvent -> {
-            primaryStage.close();
+            stage.close();
             module_trolley trolley = new module_trolley(trolleyGoods);
-            trolley.start(primaryStage);
+            trolley.start(stage);
         });
 
-        shared.init_Button_Style(myButton,20,60);
+        shared.init_Button_Style(myButton, 20, 60);
         shared.button_change(myButton);
 
         myButton.setLayoutX(270);
         myButton.setLayoutY(30);
 
+        myButton.setOnAction(e -> {
+            Stage stage1=new Stage();
+            UserInfo ui = new UserInfo(userName, auth);
+            ui.start(stage1);
+        });
+
         cartButton.setLayoutX(195);
         cartButton.setLayoutY(30);
-        buttonPane.getChildren().addAll(searchButton, cartButton, myButton);
+        if (auth == shared.AUTH_CUSTOMER) buttonPane.getChildren().addAll(searchButton, cartButton, myButton);
+        else if(auth == shared.AUTH_MANAGER) buttonPane.getChildren().addAll(searchButton);
+        else buttonPane.getChildren().addAll(searchButton, cartButton);
         GridPane.setColumnIndex(buttonPane, 2);
 
         ScrollPane leftScrollPane = new ScrollPane();
@@ -499,9 +520,14 @@ public class module_browse extends Application {
 
         root.getChildren().addAll(searchPane, buttonPane, leftScrollPane, rightScrollPane);
 
-        primaryStage.setTitle("商品浏览");
+        stage.setTitle("商品浏览");
         Scene scene = new Scene(root, 800, 600);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        showBrowse(userName, auth);
     }
 }

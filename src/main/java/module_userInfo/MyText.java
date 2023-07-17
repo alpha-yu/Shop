@@ -12,6 +12,7 @@ public class MyText {
     private String ucif;    //联系方式
     private String Uaddr;   //地址
 
+    public MyText() {}
     public MyText(String username, String psw, int AUTH,String ucif,String Uaddr) {
         this.AUTH=AUTH;
         this.psw=psw;
