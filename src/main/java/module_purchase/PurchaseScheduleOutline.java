@@ -24,9 +24,10 @@ import static module_shared.shared.dbConn;
 
 public class PurchaseScheduleOutline extends Application {
     private List<PurchaseSchedule> orders; // 模拟订单数据
-    private User user;
-    public PurchaseScheduleOutline(User user){
-        this.user = user;
+    //private User user;
+    private int auth;
+    public PurchaseScheduleOutline(int auth){
+        this.auth = auth;
     }
     public static void main(String[] args) {
         launch(args);
@@ -176,6 +177,6 @@ public class PurchaseScheduleOutline extends Application {
         }
     }
     private PurchaseScheduleInterface createOderView(PurchaseSchedule selectedItem) {
-        return new PurchaseScheduleInterface(selectedItem, user);
+        return new PurchaseScheduleInterface(selectedItem, auth);
     }
 }
