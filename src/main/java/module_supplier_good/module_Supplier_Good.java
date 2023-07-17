@@ -251,7 +251,6 @@ public class module_Supplier_Good extends Application {
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(10));
 
-
         layout.getChildren().addAll(hbox, tableview);
 
         Scene scene = new Scene(layout, 800, 600);

@@ -16,7 +16,7 @@ module com.example.demo {
     exports module_information;
     exports module_browse;
     exports module_userInfo;
-    exports  module_trolley;
+    exports module_trolley;
 
     opens module_login          to javafx.fxml;
     opens module_main           to javafx.fxml;
