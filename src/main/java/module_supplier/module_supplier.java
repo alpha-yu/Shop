@@ -34,24 +34,10 @@ public class module_supplier extends Application {
 
 
 
-//    public void connecteDatabase()
-//    {
-//        try
-//        {
-//            module_login.loginExecute();
-//        }
-//        catch(Exception e)
-//        {
-//            System.out.println(e);
-//            e.printStackTrace();
-//        }
-//    }
-
     @Override
     public void start(Stage primaryStage) {
         try
         {
-//            connecteDatabase();
             module_main.SQL_connect();
             showSupplier();
         }
@@ -104,17 +90,17 @@ public class module_supplier extends Application {
 
         Button closeButton = new Button("关闭");
         Stage primaryStage = new Stage();
-        closeButton.setOnMouseEntered(event->{closeButton.setStyle("-fx-background-color:#0056b3;-fx-text-fill:white;");});
-        closeButton.setOnMouseExited(event->{closeButton.setStyle("-fx-backgroud-color:#007bff;-fx-text-fill:white;");});
+        shared.init_Button_Style(closeButton,20,40);
+        shared.button_change(closeButton);
         closeButton.setOnAction(e -> primaryStage.close());
 
 
         Button searchButton = new Button("搜索");
         TextField searchField = new TextField();
         searchField.setPromptText("输入供应商编号或名称");
+        shared.button_change(searchButton);
+        shared.init_Button_Style(searchButton,20,40);
         searchField.setPrefWidth(700);
-        searchButton.setOnMouseEntered(event->{closeButton.setStyle("-fx-background-color:#0056b3;-fx-text-fill:white;");});
-        searchButton.setOnMouseExited(event->{closeButton.setStyle("-fx-backgroud-color:#007bff;-fx-text-fill:white;");});
 
 
         searchButton.setOnAction(e->{
