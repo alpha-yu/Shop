@@ -54,7 +54,6 @@ public class module_Supplier_Good extends Application {
         }
     }
 
-
     public void showSupplier_Good() {
         ResultSet rs;
         //筛选指定的商品 sql
@@ -253,7 +252,6 @@ public class module_Supplier_Good extends Application {
         purchaseStage.setScene(scene);
         purchaseStage.show();
     }
-
 
     //将采购单加入采购表中
     private void savePurchaseOrderToSchedule(Supplier_Good order, int quantityValue) {
