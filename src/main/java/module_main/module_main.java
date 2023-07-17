@@ -29,7 +29,7 @@ public class module_main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
         module_login.showLogin();
     }
 }
