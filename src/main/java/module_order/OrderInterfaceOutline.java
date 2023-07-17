@@ -11,8 +11,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import module_login.module_login;
-import module_shared.User;
 import module_shared.shared;
 import module_main.*;
 
@@ -26,12 +24,21 @@ import static module_shared.shared.dbConn;
 
 public class OrderInterfaceOutline extends Application {
     private List<Order> orders; // 模拟订单数据
+    private int auth;
+    private String id;
+    public OrderInterfaceOutline(int auth){
+        this.auth = auth;
+    }
+    public OrderInterfaceOutline(int auth, String id){
+        this.auth = auth;
+        this.id = id;
+    }
     public static void main(String[] args) {
         launch(args);
     }
     @Override
     public void start(Stage primaryStage) {
-//        module_main.SQL_connect();
+
         primaryStage.setTitle("Order Interface Outline");
         // 初始化订单数据
         initData();
@@ -176,7 +183,16 @@ public class OrderInterfaceOutline extends Application {
         try {
             Statement st;
             ResultSet rs;
-            String sql = "select * from V_Order";
+            String sql;
+            if(auth == 0 || auth == 1){
+                sql = "select * from V_Order " +
+                        "where Obuyer = '"+id+"';";
+            } else if (auth == 3) {
+                sql = "select * from V_Order";
+            } else {
+                sql = "select * from V_Order " +
+                        "where Obuyer = '!@#$%^&*(';";
+            }
             st = shared.dbConn.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
