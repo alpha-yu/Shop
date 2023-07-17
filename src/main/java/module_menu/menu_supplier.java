@@ -7,25 +7,29 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import module_shared.User;
 import module_shared.shared;
 
-public class menu_supplier extends Application {
-    static Stage stage;
+public class menu_supplier extends User {
 
-    public static void showMenuSupplier() {
+    public menu_supplier(String _userName, String _password, int Auth) {
+        super(_userName, _password, Auth);
+    }
+
+    public void showMenuSupplier() {
         stage = new Stage();
         stage.setTitle(shared.TEXT_PURCHASER);
 
-        //顶部pane部分
-        GridPane titlePane = new GridPane();
-        Label titleLabel = new Label(shared.TEXT_PURCHASER + "界面");
-        shared.init_titleLabel_Font(titleLabel);
-        titlePane.setAlignment(Pos.CENTER);
-        titlePane.add(titleLabel, 0, 0);
+        //title pane部分
+        GridPane titlePane = super.get_titlePane();
+
+        //功能Pane：可用于上下滑动查看功能
+        GridPane funcPane=new GridPane();
+        funcPane.setAlignment(Pos.CENTER);
 
         //第一行功能
         GridPane firstline = new GridPane();
-        firstline.setPrefWidth(500);
+        firstline.setPrefWidth(shared.width);
         firstline.setHgap(shared.gap);
         firstline.setAlignment(Pos.CENTER);
 
@@ -48,6 +52,7 @@ public class menu_supplier extends Application {
         supplyInfo.add(siBt, 0, 1);
         firstline.add(supply, 0, 0);
         firstline.add(supplyInfo, 1, 0);
+        funcPane.add(firstline,0,0);
 
         //主体pane组合
         GridPane pane = new GridPane();
@@ -55,7 +60,7 @@ public class menu_supplier extends Application {
         pane.setPadding(shared.menuPadding);
         pane.setVgap(shared.gap);
         pane.add(titlePane, 0, 0);
-        pane.add(firstline, 0, 1);
+        pane.add(funcPane, 0, 1);
 
         Scene scene = new Scene(pane, 800, 600);
         stage.setResizable(false);
