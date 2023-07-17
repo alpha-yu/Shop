@@ -9,7 +9,7 @@ public class menu_customer extends User {
     }
 
     public void showMenuCustomer() {
-        
+
     }
     @Override
     public void start(Stage stage) throws Exception {
