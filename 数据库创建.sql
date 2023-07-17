@@ -127,3 +127,15 @@ go
 
 --添加初始管理员
 insert into Users(username,psw,AUTH) values ('admin',123456,4);
+
+--Purchase触发器，Purchase新增时添加到Store
+go
+create trigger t_Purchase_to_Store
+    on Purchase
+    for insert
+as
+begin
+	declare @no varchar(20),@num int
+select @no=Pno,@num=Pnum from inserted
+    insert into Store values (@no,@num)
+end
