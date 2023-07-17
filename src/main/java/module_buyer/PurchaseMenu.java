@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import module_good.Good;
+import module_browse.Good;
 import module_order.Order;
 import module_order.OrderInterface;
 import module_shared.shared;
