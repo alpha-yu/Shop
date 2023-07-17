@@ -49,7 +49,7 @@ public class menu_supplier extends User {
             PurchaseMenu purchaseMenu = new PurchaseMenu();
             try {
                 purchaseMenu.start(new Stage());
-                stage.close();
+//                stage.close();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -64,11 +64,11 @@ public class menu_supplier extends User {
         shared.button_change(siBt);
         shared.init_Button_Style(siBt, 40, 100);
 
-        sBt.setOnAction(e -> {
+        siBt.setOnAction(e -> {
             PurchaseScheduleOutline purchaseScheduleOutline = new PurchaseScheduleOutline(shared.AUTH_PURCHASER);
             try {
                 purchaseScheduleOutline.start(new Stage());
-                stage.close();
+//                stage.close();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
