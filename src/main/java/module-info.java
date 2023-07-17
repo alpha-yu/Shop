@@ -5,7 +5,7 @@ module com.example.demo {
     requires java.desktop;
     requires java.sql;
 
-    exports Manager;
+    exports module_manager;
     exports module_shared;
     exports module_login;
     exports module_main;
@@ -14,13 +14,17 @@ module com.example.demo {
     exports module_purchase;
     exports module_menu;
     exports module_buyer;
+    exports module_browse;
+    exports module_information;
 
-    opens module_login      to javafx.fxml;
-    opens module_main       to javafx.fxml;
-    opens module_signup     to javafx.fxml;
-    opens Manager           to javafx.fxml;
-    opens module_order      to javafx.fxml;
-    opens module_purchase   to javafx.fxml;
-    opens module_menu       to javafx.fxml;
-    opens module_buyer      to javafx.fxml;
+    opens module_login          to javafx.fxml;
+    opens module_main           to javafx.fxml;
+    opens module_signup         to javafx.fxml;
+    opens module_manager        to javafx.fxml;
+    opens module_order          to javafx.fxml;
+    opens module_purchase       to javafx.fxml;
+    opens module_menu           to javafx.fxml;
+    opens module_buyer          to javafx.fxml;
+    opens module_browse         to javafx.fxml;
+    opens module_information    to javafx.fxml;
 }
