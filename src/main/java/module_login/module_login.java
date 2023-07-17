@@ -11,8 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import module_menu.menu_admin;
-import module_menu.menu_supplier;
+import module_menu.*;
 import module_shared.shared;
 import module_signup.module_signup;
 
@@ -172,6 +171,11 @@ public class module_login extends Application {
             menu_supplier menu = new menu_supplier(name, psw, auth);
             stage.close();
             menu.showMenuSupplier();
+        }
+        if (auth == shared.AUTH_MANAGER) {
+            menu_manager menu = new menu_manager(name, psw, auth);
+            stage.close();
+            menu.ShowMenu();
         }
         if (auth == shared.AUTH_ADMINISTRATOR) {
             menu_admin menu = new menu_admin(name, psw, auth);
