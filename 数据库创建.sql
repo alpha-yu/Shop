@@ -120,9 +120,13 @@ create view V_Order as
     group by OBno,Obuyer,Oprice,Otime,Oinfo
 go
 create view V_Purchase as
-    select PBno,count(*) as Psum,sum(Pprice) as SumPrice,Ptime,Pperson
-    from Purchase
-    group by PBno,Pprice,Ptime,Pperson
+    select distinct P2.PBno,Psum,SumPrice,Ptime,Pperson
+    from (
+        select PBno,count(*) as Psum,sum(Pprice) as SumPrice
+        from Purchase
+        group by PBno
+        ) P1,Purchase P2
+    where P1.PBno=P2.PBno
 go
 
 --添加初始管理员
