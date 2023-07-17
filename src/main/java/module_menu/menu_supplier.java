@@ -9,16 +9,16 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import module_shared.shared;
 
-public class menu_admin extends Application {
+public class menu_supplier extends Application {
     static Stage stage;
 
-    public static void showMenuAdmin() {
+    public static void showMenuSupplier() {
         stage = new Stage();
-        stage.setTitle(shared.TEXT_ADMINISTRATOR);
+        stage.setTitle(shared.TEXT_PURCHASER);
 
         //顶部pane部分
         GridPane titlePane = new GridPane();
-        Label titleLabel = new Label(shared.TEXT_ADMINISTRATOR + "界面");
+        Label titleLabel = new Label(shared.TEXT_PURCHASER + "界面");
         shared.init_titleLabel_Font(titleLabel);
         titlePane.setAlignment(Pos.CENTER);
         titlePane.add(titleLabel, 0, 0);
@@ -26,17 +26,28 @@ public class menu_admin extends Application {
         //第一行功能
         GridPane firstline = new GridPane();
         firstline.setPrefWidth(500);
+        firstline.setHgap(shared.gap);
+        firstline.setAlignment(Pos.CENTER);
 
-        //角色更改
-        GridPane role_change = shared.init_GridPane_Style();
-        Label rcLabel = shared.init_funcLabel_Font("用户管理");
-        Button rcBt = shared.init_Button_Font("进入");
-        shared.button_change(rcBt);
-        shared.init_Button_Style(rcBt, 40, 100);
+        //采购
+        GridPane supply = shared.init_GridPane_Style();
+        Label sLabel = shared.init_funcLabel_Font("采购申请");
+        Button sBt = shared.init_Button_Font("进入");
+        shared.button_change(sBt);
+        shared.init_Button_Style(sBt, 40, 100);
+        supply.add(sLabel, 0, 0);
+        supply.add(sBt, 0, 1);
+        //采购
+        GridPane supplyInfo = shared.init_GridPane_Style();
+        Label siLabel = shared.init_funcLabel_Font("采购表状态");
+        Button siBt = shared.init_Button_Font("进入");
+        shared.button_change(siBt);
+        shared.init_Button_Style(siBt, 40, 100);
 
-        role_change.add(rcLabel, 0, 0);
-        role_change.add(rcBt, 0, 1);
-        firstline.add(role_change, 0, 0);
+        supplyInfo.add(siLabel, 0, 0);
+        supplyInfo.add(siBt, 0, 1);
+        firstline.add(supply, 0, 0);
+        firstline.add(supplyInfo, 1, 0);
 
         //主体pane组合
         GridPane pane = new GridPane();
@@ -54,6 +65,6 @@ public class menu_admin extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        showMenuAdmin();
+        showMenuSupplier();
     }
 }
