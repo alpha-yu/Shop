@@ -9,7 +9,7 @@ use Shop;
 
 create table Users(
 username varchar(30) primary key,
-psw		 varchar(30),
+psw		 varchar(30) not null,
 AUTH	 int not null,
 UCIF     varchar(20),
 Uaddr    varchar(200)
@@ -29,7 +29,7 @@ EXPdate int
 
 create table Supplier(
 Sno   varchar(20) primary key,
-Sname varchar(50),
+Sname varchar(50) not null,
 SCIF  varchar(20)
 )
 
