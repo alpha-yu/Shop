@@ -42,8 +42,8 @@ public class module_signup extends Application {
         pane.setAlignment(Pos.CENTER);
 
         //按钮大小字体设置
-        shared.init_Button_Style(btSignup, 40, 500);
-        shared.init_Button_Style(btBack, 40, 500);
+        shared.init_Button_Style(btSignup, 40, shared.width);
+        shared.init_Button_Style(btBack, 40, shared.width);
         shared.button_change(btSignup);
         shared.button_change(btBack);
 
@@ -59,7 +59,7 @@ public class module_signup extends Application {
         Label userLabel = new Label("用户名");
         userLabel.setFont(font);
         user.setFont(font);
-        user.setPrefWidth(500);
+        user.setPrefWidth(shared.width);
         user.setPromptText("请输入您的用户名");
         UserPane.add(userLabel, 0, 0);
         UserPane.add(user, 0, 1);
@@ -70,7 +70,7 @@ public class module_signup extends Application {
         Label pswLabel = new Label("密码");
         pswLabel.setFont(font);
         psw.setFont(font);
-        psw.setPrefWidth(500);
+        psw.setPrefWidth(shared.width);
         psw.setPromptText("请输入密码");
         pswPane.add(pswLabel, 0, 0);
         pswPane.add(psw, 0, 1);
@@ -81,7 +81,7 @@ public class module_signup extends Application {
         Label pswcheckLabel = new Label("密码确认");
         pswcheckLabel.setFont(font);
         pswcheck.setFont(font);
-        pswcheck.setPrefWidth(500);
+        pswcheck.setPrefWidth(shared.width);
         pswcheck.setPromptText("请再次输入密码");
         pswcheckPane.add(pswcheckLabel, 0, 0);
         pswcheckPane.add(pswcheck, 0, 1);
@@ -93,7 +93,7 @@ public class module_signup extends Application {
         ObservableList<String> options = FXCollections.observableArrayList(shared.TEXT_CUSTOMER);
         role.setItems(options);
         role.setValue(shared.TEXT_CUSTOMER);
-        role.setPrefWidth(500);
+        role.setPrefWidth(shared.width);
         role.setStyle("-fx-font: 18px \"Serif\";");
         roleLabel.setFont(font);
         RolePane.add(roleLabel, 0, 0);

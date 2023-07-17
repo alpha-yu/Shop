@@ -10,8 +10,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import module_login.module_login;
 import module_main.module_main;
+import module_shared.User;
 import module_shared.shared;
 
 import java.sql.ResultSet;
@@ -24,6 +24,11 @@ import static module_shared.shared.dbConn;
 
 public class PurchaseScheduleOutline extends Application {
     private List<PurchaseSchedule> orders; // 模拟订单数据
+    //private User user;
+    private int auth;
+    public PurchaseScheduleOutline(int auth){
+        this.auth = auth;
+    }
     public static void main(String[] args) {
         launch(args);
     }
@@ -172,6 +177,6 @@ public class PurchaseScheduleOutline extends Application {
         }
     }
     private PurchaseScheduleInterface createOderView(PurchaseSchedule selectedItem) {
-        return new PurchaseScheduleInterface(selectedItem);
+        return new PurchaseScheduleInterface(selectedItem, auth);
     }
 }
