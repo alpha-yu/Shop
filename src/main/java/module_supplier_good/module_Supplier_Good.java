@@ -280,13 +280,8 @@ public class module_Supplier_Good extends Application {
             ps.executeUpdate();
             ps.close();
 
-
         } catch (Exception e) {
             System.out.println(e);
         }
-
-
     }
-
-
 }

@@ -31,10 +31,10 @@ public class module_browse extends Application {
     public static String cateString = new String("");
     public static GridPane rightGridPane = new GridPane();
     public static int goodStore = 0;
-    static List<Good> trolleyGoods = new ArrayList<>();
     public static Stage stage;
     public static String userName;
     public static int auth;
+    static List<Good> trolleyGoods = new ArrayList<>();
 
     public module_browse() {
     }
@@ -44,8 +44,8 @@ public class module_browse extends Application {
     }
 
     public module_browse(String userName, int auth) {
-        this.userName=userName;
-        this.auth=auth;
+        this.userName = userName;
+        this.auth = auth;
     }
 
     public static void cateSetOutput(VBox leftVBox, HashSet<String> cateSet) {
@@ -337,7 +337,7 @@ public class module_browse extends Application {
     }
 
     public static void showBrowse(String userName, int auth) {
-        stage=new Stage();
+        stage = new Stage();
         GridPane root = new GridPane();
         root.setPrefSize(800, 600);
         root.setHgap(18);
@@ -446,14 +446,15 @@ public class module_browse extends Application {
         myButton.setLayoutY(30);
 
         myButton.setOnAction(e -> {
-            stage.close();
-            UserInfo ui=new UserInfo(userName,auth);
-            ui.start(stage);
+            Stage stage1=new Stage();
+            UserInfo ui = new UserInfo(userName, auth);
+            ui.start(stage1);
         });
 
         cartButton.setLayoutX(195);
         cartButton.setLayoutY(30);
-        buttonPane.getChildren().addAll(searchButton, cartButton, myButton);
+        if (auth == shared.AUTH_CUSTOMER) buttonPane.getChildren().addAll(searchButton, cartButton, myButton);
+        else buttonPane.getChildren().addAll(searchButton, cartButton);
         GridPane.setColumnIndex(buttonPane, 2);
 
         ScrollPane leftScrollPane = new ScrollPane();
@@ -526,6 +527,6 @@ public class module_browse extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        showBrowse(userName,auth);
+        showBrowse(userName, auth);
     }
 }
