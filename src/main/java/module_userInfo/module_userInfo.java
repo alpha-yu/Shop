@@ -133,6 +133,27 @@ public class module_userInfo extends Application {
         usernameColumn.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
         pswColumn.setCellValueFactory(cellData -> cellData.getValue().pswProperty());
         AUTHColumn.setCellValueFactory(cellData -> cellData.getValue().AUTHProperty().asObject());
+        AUTHColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer state, boolean empty) {
+                super.updateItem(state, empty);
+                if (empty || state == null) {
+                    setText("");
+                } else if (state == 0) {
+                    setText("顾客");
+                } else if (state == 0) {
+                    setText("售货员");
+                } else if (state == 1) {
+                    setText("采购员");
+                } else if (state == 4) {
+                    setText("经理");
+                } else if (state == 5) {
+                    setText("系统管理员");
+                }else {
+                    setText("权限异常");
+                }
+            }
+        });
         ucifColumn.setCellValueFactory(cellData -> cellData.getValue().ucifProperty());
         UaddrColumn.setCellValueFactory(cellData -> cellData.getValue().UaddrProperty());
 
@@ -152,7 +173,7 @@ public class module_userInfo extends Application {
         shared.button_change(buttonAlter);;
         //合并按钮
         FlowPane f1 = new FlowPane(buttonAdd, buttonDelete, buttonAlter);
-        f1.setHgap(50);//水平间距
+        f1.setHgap(20);//水平间距
         f1.setPadding(shared.menuPadding);//内间距
 
         //按用户名查询
