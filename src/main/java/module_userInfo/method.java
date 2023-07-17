@@ -2,10 +2,7 @@ package module_userInfo;
 
 import module_shared.shared;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +11,11 @@ public class method {
     List<MyText> orders;
 
     //查询并将数据库读入orders
-    public void sel(String tableName) {
+    public void sel() {
         orders = new ArrayList<>();
         try {//try catch判断是否有异常
             Statement sqlStatement = shared.dbConn.createStatement();//创建sql语句
-            String sql = "select * from " + tableName;
+            String sql = "select * from Users";
             ResultSet rs = sqlStatement.executeQuery(sql);//执行sql语句
 
             while (rs.next()) {
@@ -38,10 +35,10 @@ public class method {
     public void select(String username) {
         orders = new ArrayList<>();
         try {
-            Statement sqlStatement = shared.dbConn.createStatement();//创建sql语句
-            String sql = "select * from Users where username = " + "\'" + username + "\'";
-            System.out.println(sql);
-            ResultSet rs = sqlStatement.executeQuery(sql);//执行sql语句
+            String sql = "SELECT * FROM Users WHERE username = ?";
+            PreparedStatement pstmt = shared.dbConn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 orders.add(new MyText(rs.getString("username"), rs.getString("psw"), rs.getInt("AUTH"), rs.getString("ucif"), rs.getString("Uaddr")));
                 System.out.println("1");
@@ -54,9 +51,10 @@ public class method {
     ///删除
     public void del(String username) {
         try {
-            Statement sqlStatement = shared.dbConn.createStatement();//创建sql语句
-            String sql = "delete from Users where username = " + "\'" + username + "\'";
-            int rs = sqlStatement.executeUpdate(sql);//执行sql语句
+            String sql = "DELETE FROM Users WHERE username = ?";
+            PreparedStatement pstmt = shared.dbConn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            int rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,9 +63,14 @@ public class method {
     //增加
     public void add(String username, String psw, int AUTH, String ucif, String Uaddr) {
         try {
-            Statement sqlStatement = shared.dbConn.createStatement();//创建sql语句
-            String sql = "insert into Users values " + "(" + "\'" + username + "\'," + "\'" + psw + "\'," + AUTH + ",\'" + ucif + "\' ," + "\'" + Uaddr + "\'" + ")";
-            int rs = sqlStatement.executeUpdate(sql);//执行sql语句
+            String sql = "INSERT INTO Users (username, psw, AUTH, UCIF, Uaddr) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = shared.dbConn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            pstmt.setString(2, psw);
+            pstmt.setInt(3, AUTH);
+            pstmt.setString(4, ucif);
+            pstmt.setString(5, Uaddr);
+            pstmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,9 +79,15 @@ public class method {
     //更新
     public void update(String username, String updateUsername, String updatePsw, int updateAUTH, String ucif, String Uaddr) {
         try {
-            Statement sqlStatement = shared.dbConn.createStatement();//创建sql语句
-            String sql = "update Users set username = " + "\'" + updateUsername + "\' ,psw = " + "\'" + updatePsw + "\' ,AUTH = " + updateAUTH + ",UCIF = " + "\'" + ucif + "\' ," + "Uaddr = " + "\'" + Uaddr + "\' " + "where username = " + "\'" + username + "\'";
-            int rs = sqlStatement.executeUpdate(sql);//执行sql语句
+            String sql = "UPDATE Users SET username = ?, psw = ?, AUTH = ?, UCIF = ?, Uaddr = ? WHERE username = ?";
+            PreparedStatement pstmt = shared.dbConn.prepareStatement(sql);
+            pstmt.setString(1, updateUsername);
+            pstmt.setString(2, updatePsw);
+            pstmt.setInt(3, updateAUTH);
+            pstmt.setString(4, ucif);
+            pstmt.setString(5, Uaddr);
+            pstmt.setString(6, username);
+            pstmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }

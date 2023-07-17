@@ -101,12 +101,12 @@ public class module_signup extends Application {
         RolePane.setVgap(5);
 
         //signup按钮相应事件，进行注册检验
-        btSignup.setOnMouseClicked(e -> {
+        btSignup.setOnAction(e -> {
             signup_check();
         });
 
         //back按钮相应事件，返回登录页面
-        btBack.setOnMouseClicked(e -> {
+        btBack.setOnAction(e -> {
             stage.close();
             module_login.showLogin();
         });

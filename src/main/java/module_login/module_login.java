@@ -90,12 +90,12 @@ public class module_login extends Application {
         RolePane.setVgap(5);
 
         //login按钮相应事件，进行登录验证
-        btLogin.setOnMouseClicked(e -> {
+        btLogin.setOnAction(e -> {
             loginExecute();
         });
 
         //signup按钮相应事件，跳转至signup界面，关闭当前界面
-        btSignup.setOnMouseClicked(e -> {
+        btSignup.setOnAction(e -> {
             stage.close();
             module_signup.showSignup();
         });
