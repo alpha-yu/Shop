@@ -13,3 +13,4 @@ demo.iml
 target/classes/Manager/Manager.class
 target/classes/Manager/Manager.class
 target/classes/module-info.class
+target/classes/module_login/hello-view.fxml
