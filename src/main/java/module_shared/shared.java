@@ -37,7 +37,7 @@ public class shared {
     public static final Font func_font = new Font("黑体", 25);
     public static final Font bt_font = new Font("黑体", 20);
     //数据库连接
-    public static String dbURL = "jdbc:sqlserver://localhost:9615;DatabaseName=Shop";
+    public static String dbURL = "jdbc:sqlserver://localhost;DatabaseName=Shop";
     public static Connection dbConn = null;
     public static String userStr = "sa";
     public static String passwordStr = "123456";
