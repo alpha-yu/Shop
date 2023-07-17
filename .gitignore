@@ -20,3 +20,5 @@ target/classes/module_manager/Manager.class
 target/classes/module_manager/Manager$4.class
 .idea/misc.xml
 demo.iml
+target/classes/module_information/UserInfo$PasswordInputDialog.class
+target/classes/module_information/UserInfo.class
