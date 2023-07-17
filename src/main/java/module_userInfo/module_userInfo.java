@@ -16,16 +16,17 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class module_userInfo extends Application {
+    static Stage stage;
+
     public static void main(String[] args) throws SQLException {
         launch(args);
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        module_main.SQL_connect();
+    public static void showUserInfo(){
+        stage=new Stage();
         method m=new method();
         m.sel("Users");
-        primaryStage.setTitle("用户管理");
+        stage.setTitle("用户管理");
         //创建页面标题
         Label titleLabel = new Label("用户管理");
         titleLabel.setStyle("-fx-font-size: 20px;");
@@ -93,9 +94,9 @@ public class module_userInfo extends Application {
             // 创建场景
             Scene scene = new Scene(borderPane, 800, 600);
             // 设置场景并显示
-            primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
-            primaryStage.show();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
         });
 
         //删除事件
@@ -126,9 +127,9 @@ public class module_userInfo extends Application {
                 // 创建场景
                 Scene scene = new Scene(borderPane, 800, 600);
                 // 设置场景并显示
-                primaryStage.setScene(scene);
-                primaryStage.setResizable(false);
-                primaryStage.show();
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
             }
         });
 
@@ -211,9 +212,9 @@ public class module_userInfo extends Application {
                 // 创建场景
                 Scene scene = new Scene(borderPane, 800, 600);
                 // 设置场景并显示
-                primaryStage.setScene(scene);
-                primaryStage.setResizable(false);
-                primaryStage.show();
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
             });
         });
 
@@ -289,9 +290,9 @@ public class module_userInfo extends Application {
                 // 创建场景
                 Scene scene = new Scene(borderPane, 800, 600);
                 // 设置场景并显示
-                primaryStage.setScene(scene);
-                primaryStage.setResizable(false);
-                primaryStage.show();
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
             });
         });
 
@@ -309,9 +310,9 @@ public class module_userInfo extends Application {
             // 创建场景
             Scene scene = new Scene(borderPane, 800, 600);
             // 设置场景并显示
-            primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
-            primaryStage.show();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
         });
 
         // 创建布局
@@ -325,8 +326,14 @@ public class module_userInfo extends Application {
         // 创建场景
         Scene scene = new Scene(borderPane, 800, 600);
         // 设置场景并显示
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
+    }
+
+    @Override
+    public void start(Stage stage) {
+        showUserInfo();
     }
 }

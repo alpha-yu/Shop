@@ -9,9 +9,9 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import module_shared.User;
 import module_shared.shared;
+import module_userInfo.*;
 
 public class menu_admin extends User {
-    shared s=new shared();
 
     public menu_admin(String _userName, String _password, int Auth) {
         super(_userName, _password, Auth);
@@ -43,6 +43,11 @@ public class menu_admin extends User {
         shared.init_Button_Style(rcBt, 40, 100);
         role_change.add(rcLabel, 0, 0);
         role_change.add(rcBt, 0, 1);
+
+        //角色更改按钮跳转至角色信息界面
+        rcBt.setOnMouseClicked(e->{
+            module_userInfo.showUserInfo();
+        });
 
         firstline.add(role_change, 0, 0);
         subPane.add(firstline,0,0);

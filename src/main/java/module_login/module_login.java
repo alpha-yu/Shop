@@ -167,6 +167,16 @@ public class module_login extends Application {
     }
 
     private static void jump_to_menu(String name, String psw, int auth) {
+        if (auth == shared.AUTH_CUSTOMER) {
+            menu_customer menu = new menu_customer(name, psw, auth);
+            stage.close();
+            menu.showMenuCustomer();
+        }
+        if (auth == shared.AUTH_SELLER) {
+            menu_seller menu = new menu_seller(name, psw, auth);
+            stage.close();
+            menu.showMenuSeller();
+        }
         if (auth == shared.AUTH_PURCHASER) {
             menu_supplier menu = new menu_supplier(name, psw, auth);
             stage.close();
@@ -182,17 +192,6 @@ public class module_login extends Application {
             stage.close();
             menu.showMenuAdmin();
         }
-        if (auth == shared.AUTH_CUSTOMER) {
-            menu_customer menu = new menu_customer(name, psw, auth);
-            stage.close();
-            menu.showMenuCustomer();
-        }
-        if (auth == shared.AUTH_SELLER) {
-            menu_seller menu = new menu_seller(name, psw, auth);
-            stage.close();
-            menu.showMenuSeller();
-        }
-
     }
 
     @Override

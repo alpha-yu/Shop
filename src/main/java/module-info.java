@@ -13,8 +13,9 @@ module com.example.demo {
     exports module_purchase;
     exports module_menu;
     exports module_buyer;
-    exports module_browse;
     exports module_information;
+    exports module_browse;
+    exports module_userInfo;
 
     opens module_login          to javafx.fxml;
     opens module_main           to javafx.fxml;
@@ -24,5 +25,6 @@ module com.example.demo {
     opens module_menu           to javafx.fxml;
     opens module_buyer          to javafx.fxml;
     opens module_browse         to javafx.fxml;
+    opens module_userInfo       to javafx.fxml;
     opens module_information    to javafx.fxml;
 }
