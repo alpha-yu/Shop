@@ -12,6 +12,7 @@ import module_order.OrderInterfaceOutline;
 import module_purchase.PurchaseScheduleOutline;
 import module_shared.User;
 import module_shared.shared;
+import module_buyer.PurchaseMenu;
 
 public class menu_supplier extends User {
 
@@ -45,9 +46,9 @@ public class menu_supplier extends User {
         shared.init_Button_Style(sBt, 40, 100);
 
         sBt.setOnAction(e -> {
-            PurchaseScheduleOutline purchaseScheduleOutline = new PurchaseScheduleOutline(shared.AUTH_PURCHASER);
+            PurchaseMenu purchaseMenu = new PurchaseMenu();
             try {
-                purchaseScheduleOutline.start(new Stage());
+                purchaseMenu.start(new Stage());
                 stage.close();
             } catch (Exception ex) {
                 ex.printStackTrace();
