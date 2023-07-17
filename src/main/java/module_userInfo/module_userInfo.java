@@ -2,6 +2,7 @@ package module_userInfo;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,7 +12,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import module_shared.shared;
 
-import java.awt.geom.Area;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class module_userInfo extends Application {
         launch(args);
     }
 
-    public static void createStage(MyText text, method m, TableView tableView, String title, String option){
+    public static void createStage(MyText text, method m, TableView tableView, String title, String option) {
         Stage stage = new Stage();
         stage.setTitle(title);
         GridPane pane = new GridPane();
@@ -46,14 +46,15 @@ public class module_userInfo extends Application {
         v2.setText(text.getPsw());
         Label l3 = new Label("用户权限：");
         l3.setStyle("-fx-font-size: 15px;");
-        TextField v3 = new TextField();
-        String x = text.getAUTH() + "";
-        v3.setText(x);
+        ComboBox<String> v3 = new ComboBox<>();
+        ObservableList<String> options = FXCollections.observableArrayList(shared.TEXT_CUSTOMER, shared.TEXT_SELLER, shared.TEXT_PURCHASER, shared.TEXT_MANAGER, shared.TEXT_ADMINISTRATOR);
+        v3.setItems(options);
+        v3.setValue(shared.AUTH_to_text(text.getAUTH()));
         Label l4 = new Label("联系方式：");
         l4.setStyle("-fx-font-size: 15px;");
         TextField v4 = new TextField();
         v4.setText(text.getUcif());
-        Label l5 = new Label("     地址：");
+        Label l5 = new Label("地址：");
         l5.setStyle("-fx-font-size: 15px;");
         TextField v5 = new TextField();
         v5.setText(text.getUaddr());
@@ -80,10 +81,10 @@ public class module_userInfo extends Application {
         stage.show();
 
         sure.setOnAction(b -> {
-            if(option.equals("alter")){
+            if (option.equals("alter")) {
                 String username = v1.getText();
                 String psw = v2.getText();
-                String auth = v3.getText();
+                String auth = String.valueOf(shared.text_to_AUTH(v3.getValue()));
                 String ucif = v4.getText();
                 String Uaddr = v5.getText();
                 int AUTH = Integer.parseInt(auth);
@@ -91,7 +92,7 @@ public class module_userInfo extends Application {
             } else if (option.equals("add")) {
                 String username = v1.getText();
                 String psw = v2.getText();
-                String auth = v3.getText();
+                String auth = String.valueOf(shared.text_to_AUTH(v3.getValue()));
                 String ucif = v4.getText();
                 String Uaddr = v5.getText();
                 int AUTH = Integer.parseInt(auth);
@@ -103,9 +104,10 @@ public class module_userInfo extends Application {
             tableView.refresh();
         });
     }
-    public static void showUserInfo(){
-        stage=new Stage();
-        method m=new method();
+
+    public static void showUserInfo() {
+        stage = new Stage();
+        method m = new method();
         m.sel();
         stage.setTitle("用户管理");
         //创建页面标题
@@ -117,7 +119,7 @@ public class module_userInfo extends Application {
         searchField.setPromptText("请输入用户名");
         Button searchButton = new Button("搜索");
         //设置‘搜索’按钮颜色
-        init_Button_Style(searchButton,20,60);
+        init_Button_Style(searchButton, 20, 60);
         shared.button_change(searchButton);
         //使文本框于搜索按钮并排
         HBox hBox = new HBox(10, searchField, searchButton);
@@ -139,17 +141,17 @@ public class module_userInfo extends Application {
                 super.updateItem(state, empty);
                 if (empty || state == null) {
                     setText("");
-                } else if (state == 0) {
+                } else if (state == shared.AUTH_CUSTOMER) {
                     setText("顾客");
-                } else if (state == 0) {
+                } else if (state == shared.AUTH_SELLER) {
                     setText("售货员");
-                } else if (state == 1) {
+                } else if (state == shared.AUTH_PURCHASER) {
                     setText("采购员");
-                } else if (state == 4) {
+                } else if (state == shared.AUTH_MANAGER) {
                     setText("经理");
-                } else if (state == 5) {
+                } else if (state == shared.AUTH_ADMINISTRATOR) {
                     setText("系统管理员");
-                }else {
+                } else {
                     setText("权限异常");
                 }
             }
@@ -165,12 +167,13 @@ public class module_userInfo extends Application {
         Button buttonAdd = new Button("增加");
         Button buttonDelete = new Button("删除");
         Button buttonAlter = new Button("修改");
-        init_Button_Style(buttonAdd,30,60);
-        init_Button_Style(buttonDelete,30,60);
-        init_Button_Style(buttonAlter,30,60);
+        init_Button_Style(buttonAdd, 30, 60);
+        init_Button_Style(buttonDelete, 30, 60);
+        init_Button_Style(buttonAlter, 30, 60);
         shared.button_change(buttonAdd);
         shared.button_change(buttonDelete);
-        shared.button_change(buttonAlter);;
+        shared.button_change(buttonAlter);
+        ;
         //合并按钮
         FlowPane f1 = new FlowPane(buttonAdd, buttonDelete, buttonAlter);
         f1.setHgap(20);//水平间距
@@ -196,7 +199,7 @@ public class module_userInfo extends Application {
         buttonAdd.setOnAction(a -> {
             MyText text = new MyText();
             //创建新界面
-            createStage(text, m, tableView, "修改用户信息", "add");
+            createStage(text, m, tableView, "新增用户信息", "add");
         });
 
         //删除事件
@@ -247,6 +250,7 @@ public class module_userInfo extends Application {
         stage.show();
 
     }
+
     @Override
     public void start(Stage stage) {
         showUserInfo();
