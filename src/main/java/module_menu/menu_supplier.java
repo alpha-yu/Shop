@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import module_shared.User;
@@ -24,8 +25,9 @@ public class menu_supplier extends User {
         GridPane titlePane = super.get_titlePane();
 
         //功能Pane：可用于上下滑动查看功能
-        GridPane funcPane=new GridPane();
-        funcPane.setAlignment(Pos.CENTER);
+        GridPane subPane=new GridPane();
+        subPane.setAlignment(Pos.CENTER);
+        ScrollPane funcPane= shared.Grid_to_Scroll(subPane);
 
         //第一行功能
         GridPane firstline = new GridPane();
@@ -33,7 +35,7 @@ public class menu_supplier extends User {
         firstline.setHgap(shared.gap);
         firstline.setAlignment(Pos.CENTER);
 
-        //采购
+        //采购申请
         GridPane supply = shared.init_GridPane_Style();
         Label sLabel = shared.init_funcLabel_Font("采购申请");
         Button sBt = shared.init_Button_Font("进入");
@@ -41,18 +43,18 @@ public class menu_supplier extends User {
         shared.init_Button_Style(sBt, 40, 100);
         supply.add(sLabel, 0, 0);
         supply.add(sBt, 0, 1);
-        //采购
+        //采购表状态
         GridPane supplyInfo = shared.init_GridPane_Style();
         Label siLabel = shared.init_funcLabel_Font("采购表状态");
         Button siBt = shared.init_Button_Font("进入");
         shared.button_change(siBt);
         shared.init_Button_Style(siBt, 40, 100);
-
         supplyInfo.add(siLabel, 0, 0);
         supplyInfo.add(siBt, 0, 1);
+
         firstline.add(supply, 0, 0);
         firstline.add(supplyInfo, 1, 0);
-        funcPane.add(firstline,0,0);
+        subPane.add(firstline,0,0);
 
         //主体pane组合
         GridPane pane = new GridPane();
