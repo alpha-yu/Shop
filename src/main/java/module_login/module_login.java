@@ -175,7 +175,7 @@ public class module_login extends Application {
         if (auth == shared.AUTH_MANAGER) {
             menu_manager menu = new menu_manager(name, psw, auth);
             stage.close();
-            menu.ShowMenu();
+            menu.ShowMenuManager();
         }
         if (auth == shared.AUTH_ADMINISTRATOR) {
             menu_admin menu = new menu_admin(name, psw, auth);

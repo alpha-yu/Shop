@@ -23,7 +23,7 @@ public class menu_manager extends User {
     }
 
     //    @Override
-    public void ShowMenu() {
+    public void ShowMenuManager() {
         int Auth = 3;
         stage = new Stage();
         stage.setTitle(shared.TEXT_PURCHASER);
@@ -100,6 +100,6 @@ public class menu_manager extends User {
 
     @Override
     public void start(Stage stage) throws Exception {
-        ShowMenu();
+        ShowMenuManager();
     }
 }
