@@ -14,8 +14,10 @@ import javafx.util.Callback;
 import module_browse.Good;
 import module_order.Order;
 import module_order.OrderInterface;
+import module_purchase.PurchaseScheduleInterface;
 import module_shared.shared;
 import module_main.*;
+import module_supplier_good.module_Supplier_Good;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -25,7 +27,11 @@ import java.util.List;
 import static module_shared.shared.*;
 
 public class PurchaseMenu extends Application {
-    private List<Good> goods; // 模拟订单数据
+    private List<Good> goods; // 订单数据
+    private String username;
+    public PurchaseMenu (String username){
+        this.username = username;
+    }
     public static void main(String[] args) {
         launch(args);
     }
@@ -70,9 +76,7 @@ public class PurchaseMenu extends Application {
         goodNameColumn.setPrefWidth(190);
         numColumn.setPrefWidth(190);
         buttonColumn.setPrefWidth(210);
-//        buttonColumn.setCellValueFactory(column -> {
-//
-//        });
+
         // 添加列到表格
         tableView.getColumns().addAll(goodIdColumn, goodNameColumn, numColumn, buttonColumn);
         // 设置表格数据
@@ -110,10 +114,9 @@ public class PurchaseMenu extends Application {
                             Good order = getTableView().getItems().get(getIndex());
                             if (order != null) {
                                 // 在这里实现跳转逻辑，可以打开新窗口或者加载新的界面
-
+                                module_Supplier_Good root = createOderView(order, username);
                                 Stage newStage = new Stage();
-                                newStage.show();
-                                primaryStage.close();
+                                root.start(newStage);
                             }
                         });
                     }
@@ -179,7 +182,7 @@ public class PurchaseMenu extends Application {
             e.printStackTrace();
         }
     }
-    private OrderInterface createOderView(Order selectedItem) {
-        return new OrderInterface(selectedItem);
+    private module_Supplier_Good createOderView(Good order, String username) {
+        return new module_Supplier_Good(order, username);
     }
 }
