@@ -1,7 +1,6 @@
 package module_purchase;
 
 import javafx.application.Application;
-import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -11,8 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import module_login.module_login;
 import module_main.module_main;
+import module_shared.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,9 +24,11 @@ import static module_shared.shared.dbConn;
 
 public class PurchaseScheduleInterface extends Application {
     private List<PurchaseSchedule> orders; // 模拟采购表数据
+    private User user;
     private PurchaseSchedule order;
-    public PurchaseScheduleInterface(PurchaseSchedule order){
+    public PurchaseScheduleInterface(PurchaseSchedule order, User user){
         this.order = order;
+        this.user = user;
     }
     public static void main(String[] args) {
         launch(args);
@@ -98,10 +99,6 @@ public class PurchaseScheduleInterface extends Application {
         buyerIdColumn.setCellValueFactory(cellData -> cellData.getValue().buyerIdProperty());
         stateColumn.setCellValueFactory(cellData -> cellData.getValue().stateProperty().asObject());
         //回调函数自定义单元格内容
-        stateColumn.setCellValueFactory(cellData -> {
-            IntegerProperty stateProperty = cellData.getValue().stateProperty();
-            return stateProperty.asObject();
-        });
         stateColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(Integer state, boolean empty) {
@@ -278,6 +275,6 @@ public class PurchaseScheduleInterface extends Application {
         }
     }
     private PurchaseScheduleOutline createOderView() {
-        return new PurchaseScheduleOutline();
+        return new PurchaseScheduleOutline(user);
     }
 }
