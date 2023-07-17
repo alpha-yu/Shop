@@ -1,9 +1,11 @@
 package module_shared;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
@@ -48,28 +50,38 @@ public class shared {
     }
 
     //菜单模块风格初始化
-    public static GridPane init_GridPane_Style(){
-        GridPane gp=new GridPane();
+    public static GridPane init_GridPane_Style() {
+        GridPane gp = new GridPane();
         gp.setPrefWidth(220);
         gp.setPrefHeight(120);
-        gp.setStyle(shared.grey_background+shared.round);
+        gp.setStyle(shared.grey_background + shared.round);
         gp.setAlignment(Pos.CENTER);
         gp.setVgap(10);
+
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+        columnConstraints.setHalignment(HPos.CENTER);
+        gp.getColumnConstraints().add(columnConstraints);
         return gp;
     }
 
     //主菜单按钮字体初始化
-    public static void init_Button_Font(Button bt){
+    public static Button init_Button_Font(String str) {
+        Button bt = new Button(str);
         bt.setFont(shared.bt_font);
+        bt.setAlignment(Pos.CENTER);
+        return bt;
     }
 
     //菜单字体初始化
-    public static void init_funcLabel_Font(Label l){
+    public static Label init_funcLabel_Font(String str) {
+        Label l = new Label(str);
         l.setFont(shared.func_font);
+        l.setAlignment(Pos.CENTER);
+        return l;
     }
 
     //菜单字体初始化
-    public static void init_titleLabel_Font(Label l){
+    public static void init_titleLabel_Font(Label l) {
         l.setFont(shared.title_font);
     }
 

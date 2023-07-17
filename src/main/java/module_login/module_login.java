@@ -34,16 +34,14 @@ public class module_login extends Application {
 
         stage.setTitle("登录");
         Font font = new Font("宋体", 18);
-        Button btLogin = new Button("登录");
-        Button btSignup = new Button("注册");
+        Button btLogin = shared.init_Button_Font("登录");
+        Button btSignup = shared.init_Button_Font("注册");
         GridPane pane = new GridPane();
 
         pane.setHgap(5);
         pane.setAlignment(Pos.CENTER);
 
         //按钮大小字体设置
-        shared.init_Button_Font(btLogin);
-        shared.init_Button_Font(btSignup);
         shared.init_Button_Style(btLogin,40,500);
         shared.init_Button_Style(btSignup,40,500);
         shared.button_change(btLogin);

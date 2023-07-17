@@ -24,8 +24,6 @@ public class module_signup extends Application {
     static PasswordField psw;
     static PasswordField pswcheck;
     static ComboBox<String> role;
-    static Button btSignup;
-    static Button btBack;
 
     public static void showSignup() {
         stage = new Stage();
@@ -36,18 +34,16 @@ public class module_signup extends Application {
 
         stage.setTitle("注册");
         Font font = new Font("宋体", 18);
-        btSignup = new Button("注册");
-        btBack = new Button("返回");
+        Button btSignup = shared.init_Button_Font("注册");
+        Button btBack = shared.init_Button_Font("返回");
 
         GridPane pane = new GridPane();
         pane.setHgap(5);
         pane.setAlignment(Pos.CENTER);
 
         //按钮大小字体设置
-        shared.init_Button_Font(btSignup);
-        shared.init_Button_Font(btBack);
-        shared.init_Button_Style(btSignup,40,500);
-        shared.init_Button_Style(btBack,40,500);
+        shared.init_Button_Style(btSignup, 40, 500);
+        shared.init_Button_Style(btBack, 40, 500);
         shared.button_change(btSignup);
         shared.button_change(btBack);
 
