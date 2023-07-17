@@ -14,10 +14,14 @@ public abstract class User extends Application {
     private String UCIF;
     private String Uaddr;
 
-    public User(String _userName,String _password,int Auth){
+    public User(String _userName, String _password, int Auth) {
         set_userName(_userName);
         set_password(_password);
         setAuth(Auth);
+    }
+
+    public static void close() {
+        stage.close();
     }
 
     public String get_userName() {
@@ -62,9 +66,5 @@ public abstract class User extends Application {
 
     public GridPane get_titlePane() {
         return shared.init_titlePane(this);
-    }
-
-    public static void close(){
-        stage.close();
     }
 }
