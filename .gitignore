@@ -30,3 +30,15 @@ target/classes/module_login/hello-view.fxml
 .idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_8_1.xml
 .idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_8_1.xml
 .idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_8_1.xml
+target/classes/module_manager/Manager.class
+target/classes/module_manager/Manager$3.class
+target/classes/module_manager/Manager$4.class
+target/classes/module_manager/Manager$2.class
+target/classes/module_manager/Manager$1.class
+.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_2.xml
+.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_8_1.xml
+.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_8_1.xml
+.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_8_1.xml
+.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_8_1.xml
+.idea/libraries/Maven__org_openjfx_javafx_base_18_ea_6.xml
+.idea/libraries/Maven__org_openjfx_javafx_base_win_18_ea_6.xml
