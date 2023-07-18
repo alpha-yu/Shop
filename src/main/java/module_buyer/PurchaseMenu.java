@@ -185,4 +185,5 @@ public class PurchaseMenu extends Application {
     private module_Supplier_Good createOderView(Good order, String username) {
         return new module_Supplier_Good(order, username);
     }
+
 }
