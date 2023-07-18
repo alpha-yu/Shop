@@ -1,6 +1,5 @@
 package module_browse;
 
-import javafx.beans.binding.BooleanExpression;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
