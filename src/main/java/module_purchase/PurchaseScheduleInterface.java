@@ -262,7 +262,6 @@ public class PurchaseScheduleInterface extends Application {
                     e.printStackTrace();
                 }
             }
-            dbConn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -278,7 +277,6 @@ public class PurchaseScheduleInterface extends Application {
                 statement.setString(2, order.getPurchaseId());
                 statement.executeUpdate();  // 执行插入操作
             }
-            dbConn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

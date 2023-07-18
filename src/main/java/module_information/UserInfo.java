@@ -12,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import module_main.module_main;
+import module_order.OrderInterfaceOutline;
 import module_shared.shared;
 
 import java.sql.PreparedStatement;
@@ -134,13 +135,13 @@ public class UserInfo extends Application {
         //查询订单
         searchButton.setOnAction(event -> {
             // 在此处实现订单查询的逻辑
-//            OrderInterfaceOutline orderInterfaceOutline = new OrderInterfaceOutline(3);
-//            try {
-//                orderInterfaceOutline.start(new Stage());
-//                primaryStage.close();
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//            }
+            OrderInterfaceOutline orderInterfaceOutline = new OrderInterfaceOutline(auth,userId);
+            try {
+                orderInterfaceOutline.start(new Stage());
+                primaryStage.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         });
 
         GridPane gpButton = new GridPane();

@@ -18,7 +18,6 @@ public class Good {
     public Good() {
     }
 
-
     public Good(String gno, String gname, double gprice, String ginfo, String MATL, String CATEG, String EXPdate) {
         Gno = gno;
         Gname = gname;

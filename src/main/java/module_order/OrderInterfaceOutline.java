@@ -26,9 +26,11 @@ public class OrderInterfaceOutline extends Application {
     private List<Order> orders; // 模拟订单数据
     private int auth;
     private String id;
+
     public OrderInterfaceOutline(int auth){
         this.auth = auth;
     }
+
     public OrderInterfaceOutline(int auth, String id){
         this.auth = auth;
         this.id = id;
@@ -209,7 +211,6 @@ public class OrderInterfaceOutline extends Application {
                     e.printStackTrace();
                 }
             }
-            dbConn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
