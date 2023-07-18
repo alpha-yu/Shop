@@ -163,7 +163,7 @@ public class PurchaseMenu extends Application {
             ResultSet rs;
             String sql = "select g.Gno, g.Gname, g.Ginfo, v.Ssum " +
                     "from Good g, V_sell v " +
-                    "where g.Gno = v.Gno and v.Ssum < 50;";
+                    "where g.Gno = v.Gno;";
             st = shared.dbConn.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {

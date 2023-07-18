@@ -6,7 +6,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -85,7 +84,6 @@ public class module_Supplier_Good extends Application {
             public TableCell<Supplier_Good, Void> call(final TableColumn<Supplier_Good, Void> param) {
                 final TableCell<Supplier_Good, Void> cell = new TableCell<>() {
                     private final Button button = new Button("采购");
-
                     {
                         shared.init_Button_Style(button, button.getPrefHeight(), button.getPrefWidth());
                         shared.button_change(button);
@@ -121,11 +119,11 @@ public class module_Supplier_Good extends Application {
 
 
         TableColumn<Supplier_Good, Double> InpriceColumn = new TableColumn<>("进价");
-        InpriceColumn.setCellValueFactory(new PropertyValueFactory<>("inPrice"));
+        InpriceColumn.setCellValueFactory(cellData -> cellData.getValue().inPriceProperty().asObject());
 
 
         TableColumn<Supplier_Good, Double> InfeeColumn = new TableColumn<>("运输费用");
-        InfeeColumn.setCellValueFactory(new PropertyValueFactory<>("Infee"));
+        InfeeColumn.setCellValueFactory(cellData -> cellData.getValue().inFeeProperty().asObject());
 
 
         TableColumn<Supplier_Good, Void> buttonColumn = new TableColumn<>("采购");
@@ -161,7 +159,6 @@ public class module_Supplier_Good extends Application {
                 tableview.setItems(FXCollections.observableList(searchResult));
             }
         });
-
 
         tableview.getColumns().addAll(SnoColumn, GnoColumn, InpriceColumn, InfeeColumn, buttonColumn);
         tableview.setItems(FXCollections.observableList(supplierList));
@@ -223,11 +220,11 @@ public class module_Supplier_Good extends Application {
 
 
         TableColumn<Supplier_Good, Double> InpriceColumn = new TableColumn<>("进价");
-        InpriceColumn.setCellValueFactory(new PropertyValueFactory<>("inPrice"));
+        InpriceColumn.setCellValueFactory(cellData -> cellData.getValue().inPriceProperty().asObject());
 
 
         TableColumn<Supplier_Good, Double> InfeeColumn = new TableColumn<>("运输费用");
-        InfeeColumn.setCellValueFactory(new PropertyValueFactory<>("Infee"));
+        InfeeColumn.setCellValueFactory(cellDate -> cellDate.getValue().inFeeProperty().asObject());
 
         TableView<Supplier_Good> tableview = new TableView<>();
         List<Supplier_Good> supplierList = new ArrayList<>();
