@@ -292,11 +292,10 @@ public class module_trolley extends Application {
         shared.button_change(checkoutButton);
         checkoutButton.setFont(new Font(16));
         checkoutButton.setOnAction(actionEvent -> {
-            //弹窗提示已经下单成功
-            //addToOrders(goodList);
+
             generateOrder();
             System.out.println("下单成功");
-            goodList.clear();
+
         });
 
         root.getChildren().addAll(backButton, titleLabel, discountLink, scrollPane, totalPriceLabel, priceLabel, checkoutButton);
@@ -316,24 +315,28 @@ public class module_trolley extends Application {
             try
             {
                 String sql = "insert into Orders " + "values (?, ?, ?, ?, ?, ?, ?, ?)";
-
                 LocalDateTime currentTime = LocalDateTime.now();
                 DateTimeFormatter strFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
                 DateTimeFormatter sqlFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                String strtime = currentTime.format(strFormatter);
-                String sqltime = currentTime.format(sqlFormatter);
+                String strTime = currentTime.format(strFormatter);
+                String sqlTime = currentTime.format(sqlFormatter);
 
-                PreparedStatement ps = shared.dbConn.prepareStatement(sql);
-                ps.setString(1, "O" + strtime);
-                ps.setString(2, "OP" + strtime);
-                ps.setString(3, "user");
-                ps.setString(4, goodList.get(0).getGno());
-                ps.setString(5, String.valueOf(goodList.get(0).getNum()));
-                ps.setString(6, sqltime);
-                ps.setString(7, String.valueOf(totalPrice));
-                ps.setString(8, "0");
-                ps.executeUpdate();
-                ps.close();
+                int i=0;
+                for(;i<goodList.size();i++)
+                {
+                    PreparedStatement ps = shared.dbConn.prepareStatement(sql);
+                    ps.setString(1, "O" + strTime+ String.valueOf(i) );
+                    ps.setString(2, "OP" + strTime);
+                    ps.setString(3, "user");
+                    ps.setString(4, goodList.get(i).getGno());
+                    ps.setString(5, String.valueOf(goodList.get(i).getNum()));
+                    ps.setString(6, sqlTime);
+                    ps.setString(7, String.valueOf(goodList.get(i).getGprice()));
+                    ps.setString(8, "0");
+                    ps.executeUpdate();
+                    ps.close();
+                }
+
             }
             catch (Exception e)
             {
