@@ -3,14 +3,12 @@ package module_menu;
 // 经理
 // 王昕阳
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import module_browse.module_browse;
 import module_order.OrderInterfaceOutline;
@@ -32,9 +30,9 @@ public class menu_manager extends User {
         GridPane titlePane = super.get_titlePane();
 
         //功能Pane：可用于上下滑动查看功能
-        GridPane subPane=new GridPane();
+        GridPane subPane = new GridPane();
         subPane.setAlignment(Pos.CENTER);
-        ScrollPane funcPane= shared.Grid_to_Scroll(subPane);
+        ScrollPane funcPane = shared.Grid_to_Scroll(subPane);
 
         //第一行功能
         GridPane firstline = new GridPane();
@@ -53,7 +51,7 @@ public class menu_manager extends User {
 
         bt1.setOnAction(e -> {
             stage.setTitle(shared.TEXT_CUSTOMER);
-            module_browse b = new module_browse(super.get_userName(),super.getAuth());
+            module_browse b = new module_browse(super.get_userName(), super.getAuth());
             try {
                 b.start(new Stage());
             } catch (Exception ex) {
@@ -81,7 +79,7 @@ public class menu_manager extends User {
             }
         });
 
-        firstline.add(gp2,1,0);
+        firstline.add(gp2, 1, 0);
 
         //第二行功能
         GridPane secondline = new GridPane();
@@ -107,8 +105,8 @@ public class menu_manager extends User {
         });
 
         secondline.add(gp3, 0, 0);
-        subPane.add(firstline,0,0);
-        subPane.add(secondline,0,1);
+        subPane.add(firstline, 0, 0);
+        subPane.add(secondline, 0, 1);
         subPane.setVgap(shared.gap);
         funcPane.setPadding(shared.menuPadding);
 

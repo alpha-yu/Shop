@@ -40,7 +40,7 @@ public class shared {
     public static final Font func_font = new Font("黑体", 25);
     public static final Font bt_font = new Font("黑体", 20);
     public static final Font user_font = new Font("宋体", 18);
-    public static final String ScrollPane_Style="-fx-background-color: transparent;" +
+    public static final String ScrollPane_Style = "-fx-background-color: transparent;" +
             "-fx-border-color: transparent; -fx-border-radius: 25px; " +
             "-fx-background-radius: 25px; -fx-vbar-policy: never;";
     //数据库连接
@@ -136,8 +136,8 @@ public class shared {
         l.setFont(shared.title_font);
     }
 
-    public static ScrollPane Grid_to_Scroll(GridPane gp){
-        ScrollPane sp=new ScrollPane(gp);
+    public static ScrollPane Grid_to_Scroll(GridPane gp) {
+        ScrollPane sp = new ScrollPane(gp);
         sp.setStyle(ScrollPane_Style);
         return sp;
     }

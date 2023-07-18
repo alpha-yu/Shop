@@ -1,22 +1,19 @@
 package module_buyer;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
-import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import module_browse.Good;
-import module_order.Order;
-import module_order.OrderInterface;
-import module_purchase.PurchaseScheduleInterface;
+import module_main.module_main;
 import module_shared.shared;
-import module_main.*;
 import module_supplier_good.module_Supplier_Good;
 
 import java.sql.ResultSet;
@@ -29,12 +26,15 @@ import static module_shared.shared.*;
 public class PurchaseMenu extends Application {
     private List<Good> goods; // 订单数据
     private String username;
-    public PurchaseMenu (String username){
+
+    public PurchaseMenu(String username) {
         this.username = username;
     }
+
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     public void start(Stage primaryStage) {
 //        module_main.SQL_connect();
@@ -120,6 +120,7 @@ public class PurchaseMenu extends Application {
                             }
                         });
                     }
+
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -151,6 +152,7 @@ public class PurchaseMenu extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+
     // 初始化订单数据
     private void initData() {
         goods = new ArrayList<>();
@@ -182,6 +184,7 @@ public class PurchaseMenu extends Application {
             e.printStackTrace();
         }
     }
+
     private module_Supplier_Good createOderView(Good order, String username) {
         return new module_Supplier_Good(order, username);
     }

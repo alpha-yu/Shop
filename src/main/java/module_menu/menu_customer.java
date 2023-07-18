@@ -16,7 +16,7 @@ public class menu_customer extends User {
         Stage stage = new Stage();
         stage.setTitle(shared.TEXT_CUSTOMER);
 
-        module_browse b = new module_browse(super.get_userName(),super.getAuth());
+        module_browse b = new module_browse(super.get_userName(), super.getAuth());
         try {
             b.start(new Stage());
             stage.close();

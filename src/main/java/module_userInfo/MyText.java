@@ -12,14 +12,17 @@ public class MyText {
     private String ucif;    //联系方式
     private String Uaddr;   //地址
 
-    public MyText() {}
-    public MyText(String username, String psw, int AUTH,String ucif,String Uaddr) {
-        this.AUTH=AUTH;
-        this.psw=psw;
-        this.username=username;
-        this.ucif=ucif;
-        this.Uaddr=Uaddr;
+    public MyText() {
     }
+
+    public MyText(String username, String psw, int AUTH, String ucif, String Uaddr) {
+        this.AUTH = AUTH;
+        this.psw = psw;
+        this.username = username;
+        this.ucif = ucif;
+        this.Uaddr = Uaddr;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -43,6 +46,7 @@ public class MyText {
     public void setAUTH(int AUTH) {
         this.AUTH = AUTH;
     }
+
     //将属性转换为可监听对象
     public ObservableValue<String> usernameProperty() {
         return new SimpleStringProperty(username);
@@ -52,7 +56,9 @@ public class MyText {
         return new SimpleStringProperty(psw);
     }
 
-    public IntegerProperty AUTHProperty() { return new SimpleIntegerProperty(AUTH);}
+    public IntegerProperty AUTHProperty() {
+        return new SimpleIntegerProperty(AUTH);
+    }
 
     public ObservableValue<String> ucifProperty() {
         return new SimpleStringProperty(ucif);

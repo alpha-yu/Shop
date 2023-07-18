@@ -1,8 +1,6 @@
 package module_order;
 
 import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -10,34 +8,35 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
+import module_main.module_main;
 import module_shared.shared;
-import module_main.*;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Timestamp;
-
-import static module_shared.shared.dbConn;
 
 public class OrderInterfaceOutline extends Application {
     private List<Order> orders; // 模拟订单数据
     private int auth;
     private String id;
 
-    public OrderInterfaceOutline(int auth){
+    public OrderInterfaceOutline(int auth) {
         this.auth = auth;
     }
 
-    public OrderInterfaceOutline(int auth, String id){
+    public OrderInterfaceOutline(int auth, String id) {
         this.auth = auth;
         this.id = id;
     }
+
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -93,7 +92,7 @@ public class OrderInterfaceOutline extends Application {
                 super.updateItem(state, empty);
                 if (empty || state == null) {
                     setText("");
-                }  else if (state == 0) {
+                } else if (state == 0) {
                     setText("未处理");
                 } else if (state == 1) {
                     setText("已处理");
@@ -148,6 +147,7 @@ public class OrderInterfaceOutline extends Application {
                             }
                         });
                     }
+
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -177,6 +177,7 @@ public class OrderInterfaceOutline extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+
     // 初始化订单数据
     private void initData() {
         orders = new ArrayList<>();
@@ -186,9 +187,9 @@ public class OrderInterfaceOutline extends Application {
             Statement st;
             ResultSet rs;
             String sql;
-            if(auth == 0 || auth == 1){
+            if (auth == 0 || auth == 1) {
                 sql = "select * from V_Order " +
-                        "where Obuyer = '"+id+"';";
+                        "where Obuyer = '" + id + "';";
             } else if (auth == 3) {
                 sql = "select * from V_Order";
             } else {
@@ -215,6 +216,7 @@ public class OrderInterfaceOutline extends Application {
             e.printStackTrace();
         }
     }
+
     private OrderInterface createOderView(Order selectedItem) {
         return new OrderInterface(selectedItem);
     }

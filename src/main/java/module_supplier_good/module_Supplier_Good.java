@@ -7,23 +7,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 import javafx.util.Callback;
 import module_browse.Good;
 import module_main.module_main;
-import module_order.Order;
 import module_shared.shared;
-
-
-//导入采购表的模块
-import module_purchase.PurchaseSchedule;
-
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,9 +29,9 @@ import static module_shared.shared.dbConn;
 
 public class module_Supplier_Good extends Application {
 
-    private Statement st;
     Good good;
     String username;
+    private Statement st;
     private List<Supplier_Good> supplierList;
 
     public module_Supplier_Good(Good order, String username) {

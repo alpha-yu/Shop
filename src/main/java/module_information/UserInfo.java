@@ -135,7 +135,7 @@ public class UserInfo extends Application {
         //查询订单
         searchButton.setOnAction(event -> {
             // 在此处实现订单查询的逻辑
-            OrderInterfaceOutline orderInterfaceOutline = new OrderInterfaceOutline(auth,userId);
+            OrderInterfaceOutline orderInterfaceOutline = new OrderInterfaceOutline(auth, userId);
             try {
                 orderInterfaceOutline.start(new Stage());
                 primaryStage.close();
@@ -147,8 +147,8 @@ public class UserInfo extends Application {
         GridPane gpButton = new GridPane();
         gpButton.setHgap(gap);
         gpButton.setAlignment(Pos.CENTER);
-        gpButton.add(changePasswordButton,0,0);
-        if(auth==AUTH_CUSTOMER) gpButton.add(searchButton,1,0);
+        gpButton.add(changePasswordButton, 0, 0);
+        if (auth == AUTH_CUSTOMER) gpButton.add(searchButton, 1, 0);
         //并将布局添加到其中
         GridPane pane = new GridPane();
         pane.setPadding(menuPadding);

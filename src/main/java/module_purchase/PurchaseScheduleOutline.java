@@ -1,7 +1,6 @@
 package module_purchase;
 
 import javafx.application.Application;
-import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -9,29 +8,30 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import module_main.module_main;
-import module_shared.User;
 import module_shared.shared;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Timestamp;
-
-import static module_shared.shared.dbConn;
 
 public class PurchaseScheduleOutline extends Application {
     private List<PurchaseSchedule> orders; // 模拟订单数据
     //private User user;
     private int auth;
-    public PurchaseScheduleOutline(int auth){
+
+    public PurchaseScheduleOutline(int auth) {
         this.auth = auth;
     }
+
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("PurchaseSchedule Outline");
@@ -104,6 +104,7 @@ public class PurchaseScheduleOutline extends Application {
             public TableCell<PurchaseSchedule, Void> call(final TableColumn<PurchaseSchedule, Void> param) {
                 final TableCell<PurchaseSchedule, Void> cell = new TableCell<>() {
                     private final Button button = new Button("查看");
+
                     {
                         button.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;");
                         button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: #0056b3; -fx-text-fill: white;"));
@@ -119,6 +120,7 @@ public class PurchaseScheduleOutline extends Application {
                             }
                         });
                     }
+
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -148,6 +150,7 @@ public class PurchaseScheduleOutline extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+
     // 初始化订单数据
     private void initData() {
         orders = new ArrayList<>();
@@ -175,6 +178,7 @@ public class PurchaseScheduleOutline extends Application {
             e.printStackTrace();
         }
     }
+
     private PurchaseScheduleInterface createOderView(PurchaseSchedule selectedItem) {
         return new PurchaseScheduleInterface(selectedItem, auth);
     }

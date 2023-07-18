@@ -435,7 +435,7 @@ public class module_browse extends Application {
         shared.button_change(cartButton);
         cartButton.setOnAction(actionEvent -> {
             stage.close();
-            module_trolley trolley = new module_trolley(userName,auth,trolleyGoods);
+            module_trolley trolley = new module_trolley(userName, auth, trolleyGoods);
             trolley.start(stage);
         });
 
@@ -446,7 +446,7 @@ public class module_browse extends Application {
         myButton.setLayoutY(30);
 
         myButton.setOnAction(e -> {
-            Stage stage1=new Stage();
+            Stage stage1 = new Stage();
             UserInfo ui = new UserInfo(userName, auth);
             ui.start(stage1);
         });
@@ -454,7 +454,7 @@ public class module_browse extends Application {
         cartButton.setLayoutX(195);
         cartButton.setLayoutY(30);
         if (auth == shared.AUTH_CUSTOMER) buttonPane.getChildren().addAll(searchButton, cartButton, myButton);
-        else if(auth == shared.AUTH_MANAGER) buttonPane.getChildren().addAll(searchButton);
+        else if (auth == shared.AUTH_MANAGER) buttonPane.getChildren().addAll(searchButton);
         else buttonPane.getChildren().addAll(searchButton, cartButton);
         GridPane.setColumnIndex(buttonPane, 2);
 

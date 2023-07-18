@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import module_shared.User;
 import module_shared.shared;
-import module_userInfo.*;
+import module_userInfo.module_userInfo;
 
 public class menu_admin extends User {
 
@@ -25,9 +25,9 @@ public class menu_admin extends User {
         GridPane titlePane = super.get_titlePane();
 
         //功能Pane：可用于上下滑动查看功能
-        GridPane subPane=new GridPane();
+        GridPane subPane = new GridPane();
         subPane.setAlignment(Pos.CENTER);
-        ScrollPane funcPane= shared.Grid_to_Scroll(subPane);
+        ScrollPane funcPane = shared.Grid_to_Scroll(subPane);
 
         //第一行功能
         GridPane firstline = new GridPane();
@@ -45,12 +45,12 @@ public class menu_admin extends User {
         role_change.add(rcBt, 0, 1);
 
         //角色更改按钮跳转至角色信息界面
-        rcBt.setOnAction(e->{
+        rcBt.setOnAction(e -> {
             module_userInfo.showUserInfo();
         });
 
         firstline.add(role_change, 0, 0);
-        subPane.add(firstline,0,0);
+        subPane.add(firstline, 0, 0);
 
         //主体pane组合
         GridPane pane = new GridPane();

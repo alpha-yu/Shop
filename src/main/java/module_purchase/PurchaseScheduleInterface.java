@@ -11,14 +11,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import module_main.module_main;
-import module_shared.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Timestamp;
 
 import static module_shared.shared.dbConn;
 
@@ -26,13 +25,16 @@ public class PurchaseScheduleInterface extends Application {
     private List<PurchaseSchedule> orders; // 模拟采购表数据
     private int auth;
     private PurchaseSchedule order;
-    public PurchaseScheduleInterface(PurchaseSchedule order, int auth){
+
+    public PurchaseScheduleInterface(PurchaseSchedule order, int auth) {
         this.order = order;
         this.auth = auth;
     }
+
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Purchase Schedule Interface");
@@ -87,7 +89,7 @@ public class PurchaseScheduleInterface extends Application {
 
 
         //
-        Label titleLabelTip = new Label("批次:【"+order.getPurchaseBatchId()+"】的采购单");
+        Label titleLabelTip = new Label("批次:【" + order.getPurchaseBatchId() + "】的采购单");
         titleLabelTip.setStyle("-fx-font-size: 15px;");
         // 设置列与Order对象的属性关联
         purchaseIdColumn.setCellValueFactory(cellData -> cellData.getValue().purchaseIdProperty());
@@ -117,7 +119,7 @@ public class PurchaseScheduleInterface extends Application {
             }
         });
         //添加审批操作
-        if(auth == 3){
+        if (auth == 3) {
             TableColumn<PurchaseSchedule, Void> buttonColumn = review(tableView);
             tableView.getColumns().addAll(purchaseIdColumn, goodIdColumn, supplierIdColumn, numColumn, amountColumn, timeColumn, buyerIdColumn, stateColumn, buttonColumn);
         } else {
@@ -161,6 +163,7 @@ public class PurchaseScheduleInterface extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+
     //审批操作
     private TableColumn review(TableView<PurchaseSchedule> tableView) {
         TableColumn<PurchaseSchedule, Void> buttonColumn = new TableColumn<>("操作");
@@ -170,6 +173,7 @@ public class PurchaseScheduleInterface extends Application {
                 final TableCell<PurchaseSchedule, Void> cell = new TableCell<PurchaseSchedule, Void>() {
                     private final Button rejectButton = new Button("驳回");
                     private final Button approveButton = new Button("批准");
+
                     {
                         rejectButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
                         rejectButton.setOnMouseEntered(event -> {
@@ -234,6 +238,7 @@ public class PurchaseScheduleInterface extends Application {
         buttonColumn.setCellFactory(cellFactory);
         return buttonColumn;
     }
+
     // 初始化订单数据
     private void initData() {
         orders = new ArrayList<>();
@@ -241,8 +246,8 @@ public class PurchaseScheduleInterface extends Application {
         try {
             Statement st;
             ResultSet rs;
-            String sql = "select * from Purchase "+
-                    "where PBno = '"+order.getPurchaseBatchId()+"';";
+            String sql = "select * from Purchase " +
+                    "where PBno = '" + order.getPurchaseBatchId() + "';";
             st = dbConn.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -266,8 +271,9 @@ public class PurchaseScheduleInterface extends Application {
             e.printStackTrace();
         }
     }
+
     //更新审批表状态
-    private void updateDB(){
+    private void updateDB() {
         module_main.SQL_connect();
         String sql = "UPDATE Purchase SET Pflag = ? WHERE Pno = ?";
         try {
@@ -281,6 +287,7 @@ public class PurchaseScheduleInterface extends Application {
             e.printStackTrace();
         }
     }
+
     private PurchaseScheduleOutline createOderView() {
         return new PurchaseScheduleOutline(auth);
     }

@@ -14,23 +14,23 @@ import module_shared.shared;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Timestamp;
-
-import static module_shared.shared.dbConn;
-import static module_shared.shared.text_to_AUTH;
 
 public class OrderInterface extends Application {
     private List<Order> orders; // 模拟订单数据
     private Order order;
     private int auth;
-    public OrderInterface(Order order){
+
+    public OrderInterface(Order order) {
         this.order = order;
     }
+
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Order Interface");
@@ -38,14 +38,14 @@ public class OrderInterface extends Application {
         initData();
         //创建页面标题
         String s;
-        if(order.getState() == 0){
+        if (order.getState() == 0) {
             s = "订单状态：未处理";
-        }else if(order.getState() == 1){
+        } else if (order.getState() == 1) {
             s = "订单状态：已处理";
-        }else{
+        } else {
             s = "订单状态：异常";
         }
-        Label titleLabel = new Label("订单批号："+order.getOrderBatchId()+"\n订单顾客："+order.getCustomer()+"\n"+s);
+        Label titleLabel = new Label("订单批号：" + order.getOrderBatchId() + "\n订单顾客：" + order.getCustomer() + "\n" + s);
         titleLabel.setStyle("-fx-font-size: 20px;");
         // 创建控件
         TextField searchField = new TextField();
@@ -136,6 +136,7 @@ public class OrderInterface extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+
     // 初始化订单数据
     private void initData() {
         orders = new ArrayList<>();
@@ -145,7 +146,7 @@ public class OrderInterface extends Application {
             Statement st;
             ResultSet rs;
             String sql = "select * from Orders " +
-                    "where Obno = '"+order.getOrderBatchId()+"';";
+                    "where Obno = '" + order.getOrderBatchId() + "';";
             st = shared.dbConn.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -168,6 +169,7 @@ public class OrderInterface extends Application {
             e.printStackTrace();
         }
     }
+
     private OrderInterfaceOutline createOderView() {
         return new OrderInterfaceOutline(auth);
     }

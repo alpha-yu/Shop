@@ -13,7 +13,7 @@ public class Good {
     private String MATL;
     private String CATEG;
     private String EXPdate;
-    private int num=0;
+    private int num = 0;
 
     public Good() {
     }
@@ -27,12 +27,19 @@ public class Good {
         this.CATEG = CATEG;
         this.EXPdate = EXPdate;
     }
-    public Good(String gno, String gname, String ginfo, int num){
+
+    public Good(String gno, String gname, String ginfo, int num) {
         this(gno, gname, 0, ginfo, "null", "null", "null");
         this.num = num;
     }
-    public int getNum(){return num;}
-    public void setNum(int n){num=n;}
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int n) {
+        num = n;
+    }
 
     public String getGno() {
         return Gno;
@@ -94,8 +101,12 @@ public class Good {
         return new SimpleStringProperty(Gno);
     }
 
-    public ObservableValue<String> goodNameProperty() { return new SimpleStringProperty(Gname); }
+    public ObservableValue<String> goodNameProperty() {
+        return new SimpleStringProperty(Gname);
+    }
 
-    public IntegerProperty numProperty() { return new SimpleIntegerProperty(num);}
+    public IntegerProperty numProperty() {
+        return new SimpleIntegerProperty(num);
+    }
 }
 
