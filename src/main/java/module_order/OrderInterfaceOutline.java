@@ -143,7 +143,6 @@ public class OrderInterfaceOutline extends Application {
                                 OrderInterface root = createOderView(order);
                                 Stage newStage = new Stage();
                                 root.start(newStage);
-                                primaryStage.close();
                             }
                         });
                     }

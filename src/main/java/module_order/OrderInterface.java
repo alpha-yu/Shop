@@ -72,9 +72,9 @@ public class OrderInterface extends Application {
         //返回按钮跳转到上一界面
         backButton.setOnAction(e -> {
             // 在这里实现跳转逻辑，可以打开新窗口或者加载新的界面
-            OrderInterfaceOutline root = createOderView();
-            Stage newStage = new Stage();
-            root.start(newStage);
+//            OrderInterfaceOutline root = createOderView();
+//            Stage newStage = new Stage();
+//            root.start(newStage);
             primaryStage.close();
         });
         //使文本框于搜索按钮并排
