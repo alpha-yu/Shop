@@ -171,7 +171,6 @@ public class PurchaseScheduleOutline extends Application {
                     e.printStackTrace();
                 }
             }
-            dbConn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

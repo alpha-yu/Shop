@@ -435,7 +435,7 @@ public class module_browse extends Application {
         shared.button_change(cartButton);
         cartButton.setOnAction(actionEvent -> {
             stage.close();
-            module_trolley trolley = new module_trolley(trolleyGoods);
+            module_trolley trolley = new module_trolley(userName,auth,trolleyGoods);
             trolley.start(stage);
         });
 

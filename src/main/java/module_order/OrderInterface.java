@@ -164,7 +164,6 @@ public class OrderInterface extends Application {
                     e.printStackTrace();
                 }
             }
-            dbConn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

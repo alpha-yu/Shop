@@ -19,13 +19,11 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import module_browse.Good;
 import module_browse.module_browse;
-import module_order.Order;
 import module_shared.shared;
 
+import javax.swing.*;
 import java.io.File;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,14 +32,17 @@ import java.util.List;
 
 
 public class module_trolley extends Application {
-    final static Connection[] conn = new Connection[1];
     static List<Good> goodList = new ArrayList<>();
+    static String username;
+    static int auth;
     private static GridPane gridPane = new GridPane();
 
     public module_trolley() {
     }
 
-    public module_trolley(List<Good> goodList) {
+    public module_trolley(String username, int auth, List<Good> goodList) {
+        this.username = username;
+        this.auth = auth;
         module_trolley.goodList = goodList;
     }
 
@@ -177,7 +178,7 @@ public class module_trolley extends Application {
         });
 
         Button deleteButton = new Button("删除");
-        shared.init_Button_Style(deleteButton,30,60);
+        shared.init_Button_Style(deleteButton, 30, 60);
         shared.button_change(deleteButton);
         deleteButton.setOnAction(actionEvent -> {
             goodList.remove(good);
@@ -213,6 +214,37 @@ public class module_trolley extends Application {
         launch(args);
     }
 
+    public static void generateOrder() {
+        // 计算总价
+        double totalPrice = getTotalPrice(goodList);
+        try {
+            String sql = "insert into Orders " + "values (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            LocalDateTime currentTime = LocalDateTime.now();
+            DateTimeFormatter strFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+            DateTimeFormatter sqlFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String strtime = currentTime.format(strFormatter);
+            String sqltime = currentTime.format(sqlFormatter);
+
+            PreparedStatement ps = shared.dbConn.prepareStatement(sql);
+            ps.setString(1, "O" + strtime);
+            ps.setString(2, "OP" + strtime);
+            ps.setString(3, username);
+            ps.setString(4, goodList.get(0).getGno());
+            ps.setString(5, String.valueOf(goodList.get(0).getNum()));
+            ps.setString(6, sqltime);
+            ps.setString(7, String.valueOf(totalPrice));
+            ps.setString(8, "0");
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        // 清空购物车
+        goodList.clear();
+    }
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -236,7 +268,7 @@ public class module_trolley extends Application {
         Button backButton = new Button("返回");
         backButton.setLayoutX(34);
         backButton.setLayoutY(25);
-        shared.init_Button_Style(backButton,30,60);
+        shared.init_Button_Style(backButton, 30, 60);
         shared.button_change(backButton);
         backButton.setFont(new Font(13));
         backButton.setOnAction(actionEvent -> {
@@ -288,15 +320,21 @@ public class module_trolley extends Application {
         Button checkoutButton = new Button(" 下 单 ");
         checkoutButton.setLayoutX(650);
         checkoutButton.setLayoutY(525);
-        shared.init_Button_Style(checkoutButton,30,80);
+        shared.init_Button_Style(checkoutButton, 30, 80);
         shared.button_change(checkoutButton);
         checkoutButton.setFont(new Font(16));
         checkoutButton.setOnAction(actionEvent -> {
             //弹窗提示已经下单成功
             //addToOrders(goodList);
             generateOrder();
-            System.out.println("下单成功");
+            String title = "下单成功";
+            String warning = "购买成功!";
+            JOptionPane.showMessageDialog(null, warning, title, JOptionPane.PLAIN_MESSAGE);
             goodList.clear();
+            gridPane.getChildren().clear();
+            GoodsOutput(goodList, gridPane);
+            module_trolley b = new module_trolley(username, auth, goodList);
+            b.start(primaryStage);
         });
 
         root.getChildren().addAll(backButton, titleLabel, discountLink, scrollPane, totalPriceLabel, priceLabel, checkoutButton);
@@ -306,43 +344,5 @@ public class module_trolley extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-
-        public static void generateOrder() {
-
-            // 计算总价
-            double totalPrice = getTotalPrice(goodList);
-
-            try
-            {
-                String sql = "insert into Orders " + "values (?, ?, ?, ?, ?, ?, ?, ?)";
-
-                LocalDateTime currentTime = LocalDateTime.now();
-                DateTimeFormatter strFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-                DateTimeFormatter sqlFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                String strtime = currentTime.format(strFormatter);
-                String sqltime = currentTime.format(sqlFormatter);
-
-                PreparedStatement ps = shared.dbConn.prepareStatement(sql);
-                ps.setString(1, "O" + strtime);
-                ps.setString(2, "OP" + strtime);
-                ps.setString(3, "user");
-                ps.setString(4, goodList.get(0).getGno());
-                ps.setString(5, String.valueOf(goodList.get(0).getNum()));
-                ps.setString(6, sqltime);
-                ps.setString(7, String.valueOf(totalPrice));
-                ps.setString(8, "0");
-                ps.executeUpdate();
-                ps.close();
-            }
-            catch (Exception e)
-            {
-                System.out.println(e);
-            }
-
-            // 清空购物车
-            goodList.clear();
-        }
-
-    }
+}
 
